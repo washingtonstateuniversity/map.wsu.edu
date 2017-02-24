@@ -16,4 +16,5 @@ before_script:
   - npm install -g bower
   - nuget restore Map.sln
 script:
+  - xbuild /p:Configuration=Release Map.sln
   - nunit-console Map.Tests/bin/Release/Map.Tests.dll
