@@ -4,7 +4,6 @@ before_install:
   - sudo apt-get install nunit-console
 before_script:
   - npm install -g bower
-  - bower install
   - nuget restore Map.sln
 after_script:
   - nunit-console Map.Tests/bin/Debug/Map.Tests.dll
