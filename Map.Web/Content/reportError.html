@@ -1,0 +1,31 @@
+<div class="errorWrapper" ng-class="{open: $parent.showReportError}" ng-show="$parent.showReportError">
+    <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front" tabindex="-1" role="dialog" aria-describedby="wsumap_mess" style="height: auto; width: 450px; top: calc(50% - 225px); left: calc(50% - 225px); display: block;" aria-labelledby="ui-id-4">
+        <div id="wsumap_mess" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 0px; max-height: none; height: auto;">
+            <div id="wsumap_errorReporting">
+                <form method="post">
+                    <h4>Found an error?</h4>
+                    <h5>Please provide some information to help us correct this issue.</h5>
+                    <label>Name:<br><input type="text" value="" required="" placeholder="First and Last" name="name" ng-model="reportErrorFormData.name"></label><br>
+                    <label>Email:<br><input type="email" value="" required="" placeholder="Your email address" name="email" ng-model="reportErrorFormData.email"></label><br>
+                    <label>
+                        Type:<br>
+                        <select name="issueType" required="" ng-model="reportErrorFormData.issueType">
+                            <option value="">Choose</option>
+                            <option value="tech">Technical</option>
+                            <option value="local">Location</option>
+                            <option value="content">Content</option>
+                        </select>
+                    </label><br>
+                    <label>
+                        Describe the issues: <br>
+                        <textarea required="" ng-model="reportErrorFormData.description" placeholder="Description" name="description"></textarea>
+                    </label><br><br>
+                    <input type="button" ng-click="sendErrorReport();" value="Submit">
+                    <input type="button" ng-click="$parent.showReportError=false;" value="Close">
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div ng-click="$parent.showReportError=false;" class="ui-widget-overlay ui-front" style="z-index: 99998;"></div>
+</div>

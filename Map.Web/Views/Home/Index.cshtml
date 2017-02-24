@@ -1,0 +1,156 @@
+﻿<div id="jacket">
+    <div id="binder" class=" fluid max-1980">
+        <!-- GRID BEHAVIOR: Default behavior can be changed by changing "hybrid" to "fixed" or "fluid". -->
+        <!-- CONTENT -->
+        <main>
+            <div id="header_bar">
+                <div id="toolbar">
+                    <ul>
+                        <li><h1>Pullman  Campus Map</h1></li>
+                        <li style="float:left"><a href="#" ng-click="resetMap();" id="resetmap">Reset Map</a></li>
+                        <li><a href="#" ng-click="showEmbed=true" id="embed">Link<span id="embedlink">/Embed</span></a></li>
+                        <li><a href="#" ng-click="showReportErrorPopup()" class="errorReporting">Report Error</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="centralmap_wrap">
+                <div id="selectedPlaceList" class="active heightminusbar" ng-show="markers.length > 0">
+                    <a href="#" id="selectedPlaceList_btn" hidefocus="true" ng-click="toggleListings()" ng-class="{active: listingsopen}" class="closeListings">Info</a>
+                    <div id="selectedPlaceList_area">
+                        <ul id="option"><li class="active" id="locations" ng-click="showDirections=false">Locations</li><li ng-click="showDirections=true">Directions</li></ul>
+                        <div id="listing" class="heightminusbar" tabindex="0" ng-iscroll="presidentscroll" ng-iscroll-timeout='350' ng-iscroll-refresher>
+                            <ul id="mainnav" ng-show="!showDirections">
+                                <li ng-repeat="place in markers">
+                                    <a ng-click="showWindow(place)" ng-class="{active:map.window.model == place}"><span class="place_order">{{$index+1}}</span>{{place.prime_name}} <span ng-show="place.labels.prime_abbrev">({{place.labels.prime_abbrev}})</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="centralmap" class="WSU_MAPS_NS" ng-class="{moveformenu:markers.length>0}">
+                    <ui-gmap-google-map center='map.center' zoom='map.zoom' styles='map.styles' control='map.control' events='map.events' options='map.options'>
+                        <ui-gmap-markers models='markers'
+                                            icon="'icon'"
+                                            idKey="'id'"
+                                            fit="true"
+                                            coords="'position'"
+                                            options="'markeroptions'"
+                                            events="map.markersEvents">
+                        </ui-gmap-markers>
+                        <ui-gmap-window show="map.window.show"
+                                        coords="map.window.model.position"
+                                        options="map.window.options"
+                                        closeclick="map.window.closeClick()"
+                                        templateUrl="'/Content/windowContent.html'"
+                                        templateParameter="map.window">
+                        </ui-gmap-window>
+                        <ui-gmap-polygons models="map.polys" path="'path'" stroke="'stroke'" fill="'fill'" visible="true" geodesic="true" fit="false">
+                        </ui-gmap-polygons>
+                    </ui-gmap-google-map>
+                </div>
+            </div>
+        </main>
+        <!-- /CONTENT -->
+        <!-- SPINE -->
+        <div id="spine" class="spine-column shelved color bleed windowheight">
+            <div id="glue" class="spine-glue">
+                <header class="spine-header">
+                    <button id="shelve" type="button" class="tracked"></button>
+                    <a href="http://www.wsu.edu/" id="wsu-signature" class="spine-signature tracked" hidefocus="true" style="outline: none;">Washington State University</a>
+                </header>
+                <form action="#" id="placeSearch">
+                    <input ng-model="searchterm" type="text" value="" id="searchterm" placeholder="Search for a place" />
+                    <input type="submit" class="submit" value="placeSearching" />
+                </form>
+                <section id="spine-navigation" class="spine-navigation navheight" ng-iscroll="spinescroller" ng-iscroll-timeout='350' ng-iscroll-refresher>
+                    <nav class="spine-sitenav">
+                        <ul id='main_nav'>
+                            <li class="depth_1 parent" ng-class="{'active':cat.active}" ng-repeat="cat in categories  | filter:{ Parent:null }:true">
+                                <a once-html="cat.name" ng-class="{'active':cat.active}" ng-click="toggleActiveMenuItem(cat);"></a>
+                                <div class="parentarea">
+                                    <ul>
+                                        <li class="depth_2" ng-class="{'checked':subcat.active}" ng-repeat="subcat in categories  | filter:{ Parent:{id:cat.id} }:true">
+                                            <a ng-click="toggleActiveMenuItem(subcat);">
+                                                <em>{{subcat.name}}</em>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class='off_place_action'><br /></li>
+                            <li class='altAction off_place_action'>
+                                <a href="http://pullman.mapstrat.com/nextvehicle/Map.aspx" target='_blank'>
+                                    <em>Bus Routes</em>
+                                </a>
+                            </li>
+                            <li class='altAction off_place_action'>
+                                <a id="printPdfs" href="#" ng-click="showPrintable=true">
+                                    <em>Printable Maps</em>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <form action="#" id="getDirections">
+                        <ul id="dir">
+                            <li id="directionsFrom"><input type="text" value="" ng-model="directionFrom" placeholder="Directions from..." class="not"></li>
+                            <li id="directionsTo" ng-show="directionFrom"><input type="text" value="" ng-model="directionTo" placeholder="To WSU Pullman"></li>
+                        </ul>
+                    </form>
+                </section>
+                <footer class="spine-footer">
+                    <nav id="wsu-social-channels" class="spine-social-channels">
+                        <ul></ul>
+                    </nav>
+                    <nav id="wsu-global-links" class="spine-global-links">
+                        <ul>
+                            <li class="zzusis-link"><a href="https://my.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">myWSU</a></li>
+                            <li class="access-link"><a href="https://oeo.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">Access</a></li>
+                            <li class="policies-link"><a href="https://policies.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">Policies</a></li>
+                            <li class="copyright-link"><a href="https://ucomm.wsu.edu/wsu-copyright-policy/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">©</a></li>
+                        </ul>
+                    </nav>
+                </footer>
+            </div>
+            <!--/glue-->
+        </div>
+        <!--/spine-->
+        <!-- /SPINE -->
+    </div>
+    <!--/cover-->
+</div>
+<!--/jacket-->
+<div id="aerial">
+    <a class="aerial_gouped" rel="aerial_gouped" hidefocus="true" alt="" href="/uploads/map/controll/Aerial_1640-1.jpg" style="outline: medium none;"></a>
+    <a class="aerial_gouped" rel="aerial_gouped" hidefocus="true" alt="" href="/uploads/map/controll/Aerial_7543.jpg" style="outline: medium none;"></a>
+    <a class="aerial_gouped" rel="aerial_gouped" hidefocus="true" alt="" href="/uploads/map/controll/Aerial_7586.jpg" style="outline: medium none;"></a>
+</div>
+<script type="text/javascript">
+			var map_view = {
+				inview : false,
+				siteroot : 'http://localhost:56180/',
+				debug : true,
+				view_id : "centralmap",
+				view : 'public/',
+				error_reporting : true,
+				activePlace : 0,
+				campus : 'Pullman',
+				url : '/',
+				campus_latlng_str : '46.73090,-117.16101',
+				fit_to_bound : 'Washington State University Pullman, Washington USA'
+			};
+</script>
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" ng-show="searchplaces.length > 0" tabindex="0" style="top: 178px;left: 28px;width: 191px;z-index:99999999" click-outside="clearAutocomplete()" outside-if-not="searchterm">
+    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':false}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>
+    <li class="related ui-menu-item" id="ui-id-9" tabindex="-1"><em>Related search items</em></li>
+    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':true}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>
+</ul>
+<ng-include src="'/Content/embed.html'"></ng-include>
+<ng-include src="'/Content/printable.html'"></ng-include>
+<ng-include src="'/Content/reportError.html'"></ng-include>
+<ng-include src="'/Content/message.html'"></ng-include>
+<ng-include src="'/Content/loading.html'"></ng-include>
+
+
+
+
+

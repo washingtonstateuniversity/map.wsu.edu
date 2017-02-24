@@ -1,0 +1,28 @@
+{
+  "name": "animateCSS",
+  "authors": [
+    "Adrián de la Rosa <adrian@delarosab.me>"
+  ],
+  "description": "Plugin jQuery to stack CSS animations and transitions",
+  "main": "jquery.animateCSS.js",
+  "keywords": [
+    "jquery",
+    "animate",
+    "css"
+  ],
+  "license": "GNU GPLv2",
+  "dependencies": {
+    "jquery": "~2.1.4"
+  },
+  "homepage": "https://github.com/adelarosab/jquery.animateCSS",
+  "_release": "9734b2fdba",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9734b2fdbabf0182e46b30c2d43c61afe373f882"
+  },
+  "_source": "git://github.com/adelarosab/jquery.animateCSS.git",
+  "_target": "*",
+  "_originalSource": "jquery.animateCSS",
+  "_direct": true
+}

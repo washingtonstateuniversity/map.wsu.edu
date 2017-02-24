@@ -1,0 +1,33 @@
+<div class='infoBox'><span class='tabedBox infoClose' ng-click="closeClick()">X</span>
+	<!-- Full info popup -->
+	<div id='popup' class='ui-tabs ui-widget ui-widget-content ui-corner-all' ng-show="parameter.model.content">
+		<ul class='ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all' role='tablist'> 	
+			<li ng-repeat="onecontent in parameter.model.content" class='ui-state-default ui-corner-top first ui-tabs-selected ' tabindex='{{$index}}'>
+				<a  href='#tabs-{{$index}}' class='ui-tabs-anchor' role='presentation'>{{onecontent.title}}</a>
+			</li> 
+		</ul> 
+		<div ng-repeat="onecontent in parameter.model.content" id='tabs-{{$index}}' class='ui-tabs-panel ui-widget-content ui-corner-bottom resp' style="display:none;">
+			<div class='content'>
+				<h2 class='header'><span class='iw_id'>{{parameter.model.number}}</span>{{parameter.model.labels.title}} <span ng-show="parameter.model.labels.prime_abbrev">({{parameter.model.labels.prime_abbrev}})</span></h2>
+				<div ng-show="onecontent.title == 'Overview'"><a href="{{parameter.model.prime_image.src}}" alt="" hidefocus="true" rel="grouped" class="grouped headImage" ng-class="{orientation_v: parameter.model.prime_image.oreintation=='h'}" target="_blank"><img src="{{parameter.model.prime_image.src}}{{parameter.model.prime_image.thumb_params}}" rel="grouped" class="grouped headImage" ng-class="{orientation_v: parameter.model.prime_image.oreintation=='h'}"> </a></div>
+				<span ng-bind-html='onecontent.block'></span>
+			</div>
+			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
+		</div>
+	</div>
+	<!-- This is for ones with only a title -->
+	<div id='popup' class='ui-tabs ui-widget ui-widget-content ui-corner-all' ng-show="!parameter.model.content">
+		<ul class='ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all' role='tablist'> 	
+			<li class='ui-state-default ui-corner-top first ui-tabs-selected ' tabindex='1'>
+				<a  href='#tabs-1' class='ui-tabs-anchor' role='presentation'>Overview</a>
+			</li> 
+		</ul> 
+		<div id='tabs-1' class='ui-tabs-panel ui-widget-content ui-corner-bottom resp'>
+			<div class='content'>
+				<h2 class='header'><span class='iw_id'>1</span>{{parameter.model.labels.title}} <span ng-show="parameter.model.labels.prime_abbrev">({{parameter.model.labels.prime_abbrev}})</span></h2>
+				<div ng-show="parameter.model.prime_image.src"><a href="{{parameter.model.prime_image.src}}" alt="" hidefocus="true" rel="grouped" class="grouped headImage" ng-class="{orientation_v: parameter.model.prime_image.oreintation=='h'}" target="_blank"><img src="{{parameter.model.prime_image.src}}{{parameter.model.prime_image.thumb_params}}" rel="grouped" class="grouped headImage" ng-class="{orientation_v: parameter.model.prime_image.oreintation=='h'}"> </a></div>
+			</div>
+			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)" >Report&nbsp;&nbsp;error</a>
+		</div>
+	</div>
+</div>

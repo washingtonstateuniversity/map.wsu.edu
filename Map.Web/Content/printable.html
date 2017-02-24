@@ -1,0 +1,14 @@
+<div class="printableWrapper" ng-show="$parent.showPrintable">
+    <div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front" tabindex="-1" role="dialog" aria-describedby="wsumap_mess" style="height: auto; width: 450px; top: calc(50% - 225px); left: calc(50% - 225px); display: block;" aria-labelledby="ui-id-6">
+        <div id="wsumap_mess" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 0px; max-height: none; height: auto;">
+            <div id="printPdfs">
+                <h2>Printable Maps</h2>
+                <div><h3><a href="http://transportation.wsu.edu/docs/map.pdf" target="_blank">Parking<br><span id="parking" style="background-image:url(http://localhost:56180/Content/images/print/parking_icon.jpg);"></span></a></h3></div>
+                <div><h3><a href="https://map.wsu.edu/pdfs/areamap-10-18-12.pdf" target="_blank">Area<br><span id="area" style="background-image:url(http://localhost:56180/Content/images/print/area_icon-10-18-12.jpg);"></span></a></h3></div>
+                <div class="last"><h3><a href="https://map.wsu.edu/pdfs/washingtonmap.pdf" target="_blank">Washington State<br><span id="state" style="background-image:url(http://localhost:56180/Content/images/print/state_icon.jpg);"></span></a></h3></div>
+            </div>
+            <span ng-click="$parent.showPrintable=false;" class="tabedBox infoClose">X</span>
+        </div>
+    </div>
+    <div ng-click="$parent.showPrintable=false;" class="ui-widget-overlay ui-front" style="z-index: 99998;"></div>
+</div>
