@@ -117,8 +117,9 @@
       <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoRailHelper">
-      <HintPath>\\dev-mcweb.it.wsu.edu\Mcstage\Tools\MonoRail20Helper\MonoRailHelper\bin\Debug\MonoRailHelper.dll</HintPath>
+    <Reference Include="MonoRailHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\MonoRailHelper.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -230,6 +231,7 @@
     <Folder Include="Content\js\vendor\google-maps-utility-library-v3-keydragzoom\example\" />
     <Folder Include="Content\js\vendor\google-maps-utility-library-v3-markerwithlabel\docs\" />
     <Folder Include="Content\js\vendor\markerclustererplus\docs\" />
+    <Folder Include="lib\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
