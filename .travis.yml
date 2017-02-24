@@ -14,7 +14,9 @@ before_install:
   - sudo apt-get install nunit-console
 before_script:
   - npm install -g bower
+  - bower install
   - nuget restore Map.sln
 script:
   - xbuild /p:Configuration=Release Map.sln
   - nunit-console Map.Tests/bin/Release/Map.Tests.dll
+  - grunt

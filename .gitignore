@@ -245,3 +245,6 @@ ModelManifest.xml
 
 # Connection strings
 secrets.config
+
+# bower
+vendor/

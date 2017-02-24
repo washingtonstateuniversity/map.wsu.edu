@@ -63,7 +63,7 @@ namespace Map.Tests.Controllers
 			Assert.AreEqual("CUB", results.ToArray<searchPlace>()[0].label);
 
 			// Act
-			IEnumerable<searchPlace> results2 = controller.Search("CUB");
+			IEnumerable<searchPlace> results2 = controller.Search("C");
 
 			// Assert
 			Assert.IsNotNull(results2);
