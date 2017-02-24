@@ -6,4 +6,4 @@ before_script:
   - npm install -g bower
   - nuget restore Map.sln
 after_script:
-  - nunit-console Map.Tests/bin/Debug/Map.Tests.dll
+  - nunit-console Map.Tests/bin/Release/Map.Tests.dll
