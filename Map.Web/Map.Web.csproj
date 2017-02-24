@@ -1396,6 +1396,12 @@
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="secrets.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="secrets.config.default" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

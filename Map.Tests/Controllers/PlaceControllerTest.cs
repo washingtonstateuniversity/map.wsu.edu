@@ -61,6 +61,13 @@ namespace Map.Tests.Controllers
 			Assert.AreEqual(1, results.Count<searchPlace>());
 			Assert.AreEqual(3, results.ToArray<searchPlace>()[0].place_id);
 			Assert.AreEqual("CUB", results.ToArray<searchPlace>()[0].label);
+
+			// Act
+			IEnumerable<searchPlace> results2 = controller.Search("CUB");
+
+			// Assert
+			Assert.IsNotNull(results2);
+			Assert.AreEqual(2, results2.Count<searchPlace>());
 		}
 
 		/*
