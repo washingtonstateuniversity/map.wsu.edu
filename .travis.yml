@@ -12,7 +12,7 @@ notifications:
     on_start: never
 before_install:
   - sudo apt-get install nunit-console
- matrix:
+matrix:
   include:
     - env: TRAVIS_NODE_VERSION="stable"
 
