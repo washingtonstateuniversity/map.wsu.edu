@@ -10,7 +10,7 @@ namespace Map.Data
         public geometricsmap()
         {
             Id(x => x.id, "geometric_id");
-            Map(x => x.boundary).CustomType(typeof(MsSql2008GeographyType));
+			Map(x => x.boundary); //.CustomType(typeof(MsSql2008GeographyType));
             Map(x => x.name);
             Map(x => x.encoded);
             Map(x => x.staticMap);

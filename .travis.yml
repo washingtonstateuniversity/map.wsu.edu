@@ -13,7 +13,7 @@ notifications:
 before_install:
   - sudo apt-get install nunit-console
 before_script:
-  - npm install -g bower
+  - npm install -g bower grunt
   - bower install
   - nuget restore Map.sln
 script:
