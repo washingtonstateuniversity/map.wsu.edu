@@ -8,7 +8,6 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using Microsoft.
 
 namespace Map.Models {
     public class geometrics : publish_base {

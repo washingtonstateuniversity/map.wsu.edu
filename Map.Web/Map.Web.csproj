@@ -117,8 +117,7 @@
       <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoRailHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MonoRailHelper">
       <HintPath>lib\MonoRailHelper.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -288,6 +287,7 @@
     <Content Include="Content\app\services\mapService.js" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\front.styles.css" />
+    <None Include="Content\css\main.less" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\embed.html" />
     <Content Include="Content\images\ico-loader-drk.png" />
@@ -1387,10 +1387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include=".bowerrc" />
-    <Content Include="bower.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="secrets.config" />
