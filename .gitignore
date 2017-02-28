@@ -247,4 +247,6 @@ ModelManifest.xml
 secrets.config
 
 # bower
+bower_components/
+bower/
 vendor/

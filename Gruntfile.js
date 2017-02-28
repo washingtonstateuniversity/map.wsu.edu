@@ -119,21 +119,46 @@ module.exports = function(grunt) {
                     hostname: "localhost"
                 }
             }
-        }
+        },
+		uglify: {
+			my_target: {
+			  files: {
+				'Map.Web/Content/js/vendor/output.min.js': ["bower_components/jquery/dist/jquery.min.js",
+													"bower_components/jquery-cycle/jquery.cycle.all.js",
+													"bower_components/angular/angular.js",
+													"bower_components/angular-route/angular-route.js",
+													"bower_components/angular-ui-router/release/angular-ui-router.min.js",
+													"bower_components/angular-animate/angular-animate.js",
+													"bower_components/angular-touch/angular-touch.js",
+													"bower_components/angular-sanitize/angular-sanitize.js",
+													"bower_components/angular-click-outside/clickoutside.directive.js",
+													"bower_components/angular-local-storage/dist/angular-local-storage.min.js",
+													"bower_components/angular-once/once.js",
+													"bower_components/lodash/dist/lodash.min.js",
+													"bower_components/angular-simple-logger/dist/angular-simple-logger.min.js",
+													"bower_components/angular-google-maps/dist/angular-google-maps.js"]
+			  }
+			}
+		  }
     });
 
+
+	
+	
 	grunt.loadNpmTasks( "grunt-contrib-clean" );
 	grunt.loadNpmTasks( "grunt-contrib-copy" );
-    grunt.loadNpmTasks( "grunt-contrib-watch" );
+    grunt.loadNpmTasks( "grunt-contrib-csslint" );
     grunt.loadNpmTasks( "grunt-contrib-connect" );
     grunt.loadNpmTasks( "grunt-contrib-less" );
-    grunt.loadNpmTasks( "grunt-contrib-csslint" );
+	grunt.loadNpmTasks( "grunt-contrib-uglify" );
+    grunt.loadNpmTasks( "grunt-contrib-watch" );
 	grunt.loadNpmTasks( "grunt-lesslint" );
     grunt.loadNpmTasks( "grunt-phpcs" );
 	grunt.loadNpmTasks( "grunt-sed" );
     grunt.loadNpmTasks( "grunt-stylelint" );
+	
 
     // Default task(s).
-    grunt.registerTask( "default", [ "less", "sed", "stylelint" ] );
+    grunt.registerTask( "default", [ "less", "sed", "stylelint", "uglify" ] );
     grunt.registerTask( "serve", [ "connect", "watch" ] );
 };

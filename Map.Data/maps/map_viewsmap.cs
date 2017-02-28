@@ -28,7 +28,7 @@ namespace Map.Data
                 .ParentKeyColumn("view_id")
                 .ChildKeyColumn("author_id")
                 .NotFound.Ignore();
-            Map(x => x.center).CustomType(typeof(MsSql2008GeographyType));
+			Map(x => x.center); //.CustomType(typeof(MsSql2008GeographyType));
             HasOne(x => x.media);
             Map(x => x.staticMap);
             HasMany(x => x.Comments)
