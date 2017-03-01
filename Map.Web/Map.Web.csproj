@@ -287,10 +287,6 @@
     <Content Include="Content\images\ico-loader-drk.png" />
     <Content Include="Content\images\ico-loader-solid.png" />
     <Content Include="Content\images\ico-loader.png" />
-    <Content Include="Content\js\angular-ui-router.js" />
-    <Content Include="Content\js\iscroll.js" />
-    <Content Include="Content\js\lctouch.js" />
-    <Content Include="Content\js\ng-iscroll.js" />
     <Content Include="Content\js\vendor\output.min.js" />
     <Content Include="Content\message.html" />
     <Content Include="Content\printable.html" />

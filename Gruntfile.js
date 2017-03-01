@@ -121,24 +121,56 @@ module.exports = function(grunt) {
             }
         },
 		uglify: {
-			my_target: {
+			min: {
 			  files: {
-				'Map.Web/Content/js/vendor/output.min.js': ["bower_components/jquery/dist/jquery.min.js",
-													"bower_components/jquery-cycle/jquery.cycle.all.js",
-													"bower_components/angular/angular.js",
-													"bower_components/angular-route/angular-route.js",
-													"bower_components/angular-ui-router/release/angular-ui-router.min.js",
-													"bower_components/angular-animate/angular-animate.js",
-													"bower_components/angular-touch/angular-touch.js",
-													"bower_components/angular-sanitize/angular-sanitize.js",
-													"bower_components/angular-click-outside/clickoutside.directive.js",
-													"bower_components/angular-local-storage/dist/angular-local-storage.min.js",
-													"bower_components/angular-once/once.js",
-													"bower_components/lodash/dist/lodash.min.js",
-													"bower_components/angular-simple-logger/dist/angular-simple-logger.min.js",
-													"bower_components/angular-google-maps/dist/angular-google-maps.js"]
+				'Map.Web/Content/js/vendor/output.min.js': [	"bower_components/jquery/dist/jquery.min.js",
+																"bower_components/jquery-ui/jquery-ui.min.js",
+																"bower_components/iscroll/build/iscroll.js",
+																"bower_components/jquery-cycle/jquery.cycle.all.js",
+																"bower_components/angular/angular.js",
+																"bower_components/angular-iscroll/dist/lib/angular-iscroll.js",
+																"bower_components/angular-route/angular-route.js",
+																"bower_components/angular-ui-router/release/angular-ui-router.min.js",
+																"bower_components/angular-animate/angular-animate.js",
+																"bower_components/angular-touch/angular-touch.js",
+																"bower_components/angular-sanitize/angular-sanitize.js",
+																"bower_components/angular-click-outside/clickoutside.directive.js",
+																"bower_components/angular-local-storage/dist/angular-local-storage.min.js",
+																"bower_components/angular-once/once.js",
+																"bower_components/lodash/dist/lodash.min.js",
+																"bower_components/angular-simple-logger/dist/angular-simple-logger.min.js",
+																"bower_components/angular-google-maps/dist/angular-google-maps.js"]
+			  },
+			  options: {
+				beautify: false,
+				compress: true
 			  }
-			}
+			},
+			pretty: {
+				files: {
+					'Map.Web/Content/js/vendor/output.js': [	"bower_components/jquery/dist/jquery.min.js",
+																"bower_components/jquery-ui/jquery-ui.min.js",
+																"bower_components/iscroll/build/iscroll.js",
+																"bower_components/jquery-cycle/jquery.cycle.all.js",
+																"bower_components/angular/angular.js",
+																"bower_components/angular-iscroll/dist/lib/angular-iscroll.js",
+																"bower_components/angular-route/angular-route.js",
+																"bower_components/angular-ui-router/release/angular-ui-router.min.js",
+																"bower_components/angular-animate/angular-animate.js",
+																"bower_components/angular-touch/angular-touch.js",
+																"bower_components/angular-sanitize/angular-sanitize.js",
+																"bower_components/angular-click-outside/clickoutside.directive.js",
+																"bower_components/angular-local-storage/dist/angular-local-storage.min.js",
+																"bower_components/angular-once/once.js",
+																"bower_components/lodash/dist/lodash.min.js",
+																"bower_components/angular-simple-logger/dist/angular-simple-logger.min.js",
+																"bower_components/angular-google-maps/dist/angular-google-maps.js"]
+				},
+				options: {
+				beautify: true,
+				compress: false
+				}
+			}						
 		  }
     });
 

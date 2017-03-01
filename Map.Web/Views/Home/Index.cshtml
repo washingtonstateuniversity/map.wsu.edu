@@ -14,11 +14,11 @@
                 </div>
             </div>
             <div id="centralmap_wrap">
-                <div id="selectedPlaceList" class="active heightminusbar" ng-show="markers.length > 0">
+                <div id="selectedPlaceList" class="active heightminusbar ng-cloak" ng-show="markers.length > 0">
                     <a href="#" id="selectedPlaceList_btn" hidefocus="true" ng-click="toggleListings()" ng-class="{active: listingsopen}" class="closeListings">Info</a>
                     <div id="selectedPlaceList_area">
                         <ul id="option"><li class="active" id="locations" ng-click="showDirections=false">Locations</li><li ng-click="showDirections=true">Directions</li></ul>
-                        <div id="listing" class="heightminusbar" tabindex="0" ng-iscroll="presidentscroll" ng-iscroll-timeout='350' ng-iscroll-refresher>
+                        <div id="listing" class="heightminusbar" tabindex="0" iscroll="{refreshInterval: 500}">
                             <ul id="mainnav" ng-show="!showDirections">
                                 <li ng-repeat="place in markers">
                                     <a ng-click="showWindow(place)" ng-class="{active:map.window.model == place}"><span class="place_order">{{$index+1}}</span>{{place.prime_name}} <span ng-show="place.labels.prime_abbrev">({{place.labels.prime_abbrev}})</span></a>
@@ -62,10 +62,10 @@
                     <input ng-model="searchterm" type="text" value="" id="searchterm" placeholder="Search for a place" />
                     <input type="submit" class="submit" value="placeSearching" />
                 </form>
-                <section id="spine-navigation" class="spine-navigation navheight" ng-iscroll="spinescroller" ng-iscroll-timeout='350' ng-iscroll-refresher>
+                <section id="spine-navigation" class="spine-navigation navheight  ng-cloak"  iscroll="{refreshInterval: 500}">
                     <nav class="spine-sitenav">
-                        <ul id='main_nav'>
-                            <li class="depth_1 parent" ng-class="{'active':cat.active}" ng-repeat="cat in categories  | filter:{ Parent:null }:true">
+                        <ul id='main_nav' class="ng-cloak">
+                            <li class="depth_1 parent" ng-class="{'active':cat.active}" ng-repeat="cat in categories  | filter:{ Parent:null, level:1 }:true">
                                 <a once-html="cat.name" ng-class="{'active':cat.active}" ng-click="toggleActiveMenuItem(cat);"></a>
                                 <div class="parentarea">
                                     <ul>
@@ -139,7 +139,7 @@
 				fit_to_bound : 'Washington State University Pullman, Washington USA'
 			};
 </script>
-<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" ng-show="searchplaces.length > 0" tabindex="0" style="top: 178px;left: 28px;width: 191px;z-index:99999999" click-outside="clearAutocomplete()" outside-if-not="searchterm">
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ng-cloak" ng-show="searchplaces.length > 0" tabindex="0" style="top: 178px;left: 28px;width: 191px;z-index:99999999" click-outside="clearAutocomplete()" outside-if-not="searchterm">
     <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':false}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>
     <li class="related ui-menu-item" id="ui-id-9" tabindex="-1"><em>Related search items</em></li>
     <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':true}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>

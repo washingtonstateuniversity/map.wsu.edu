@@ -1,4 +1,4 @@
-var WSUApp = angular.module('WSUApp', ['angular-click-outside','once', 'LocalStorageModule', 'ngAnimate','ui.router','ng-iscroll','ngSanitize','ngTouch', 'uiGmapgoogle-maps'], function($httpProvider) {
+var WSUApp = angular.module('WSUApp', ['angular-click-outside', 'once', 'LocalStorageModule', 'ngAnimate', 'ui.router', 'angular-iscroll', 'ngSanitize', 'ngTouch', 'uiGmapgoogle-maps'], function ($httpProvider) {
   // Use x-www-form-urlencoded Content-Type
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
  

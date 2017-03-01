@@ -1,5 +1,7 @@
 'use strict';
- WSUApp.controller('MainCtrl', function($scope, $q, $http, $location, $rootScope, $state, $timeout, localStorageService, mapService, uiGmapIsReady) {
+WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope, $state, $timeout, localStorageService, mapService, uiGmapIsReady, iScrollService) {
+	var vm = this;  // Use 'controller as' syntax 
+	vm.iScrollState = iScrollService.state;
 	$scope.useragent = navigator.userAgent;
 	$scope.currentUrl = window.location.href;
 	$scope.embedW=495;
