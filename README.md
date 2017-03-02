@@ -3,7 +3,7 @@ WSU map
 
 [![Build Status](https://travis-ci.org/washingtonstateuniversity/map.wsu.edu.svg?branch=master)](https://travis-ci.org/washingtonstateuniversity/map.wsu.edu)
 
-##How to run localy
+##How to run locally
 This repo doesn't include the `Map.Web/secrets.config` file which is what is used to set the database connection.  You'll have to create your own by making a copy of `Map.Web/secrets.config.default` and renaming it `Map.Web/secrets.config`.  This will look like:
 
 ```xml
