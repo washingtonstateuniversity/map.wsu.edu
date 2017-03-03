@@ -14,9 +14,12 @@ namespace Map.Data
             Map(x => x.is_public);
             Map(x => x.model);
             Map(x => x.name);
-            Map(x => x.set, "fieldset");
+			// Map(x => x.set, "fieldset");
+			//References(x => x.set, "fieldset");
+			//HasOne(x => x.set);
+			HasMany(x => x.fields).KeyColumn("type").NotFound.Ignore();
 
-            HasManyToMany(x => x.authors)
+			HasManyToMany(x => x.authors)
                 .Table("authors_to_field_type")
                 .ParentKeyColumn("field_type_id")
                 .ChildKeyColumn("author_id")

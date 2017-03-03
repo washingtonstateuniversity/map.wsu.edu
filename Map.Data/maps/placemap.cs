@@ -68,7 +68,7 @@ namespace Map.Data
                 .ParentKeyColumn("place_id")
                 .ChildKeyColumn("view_id")
                 .NotFound.Ignore();
-            HasManyToMany(x => x.field)
+            HasManyToMany(x => x.fields)
                 .Table("place_to_fields")
                 .ParentKeyColumn("place_id")
                 .ChildKeyColumn("field_id")

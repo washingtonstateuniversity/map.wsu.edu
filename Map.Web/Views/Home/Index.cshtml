@@ -1,12 +1,12 @@
 ﻿<div id="jacket">
-    <div id="binder" class=" fluid max-1980">
+    <div id="binder" class=" fluid max-1980"> 
         <!-- GRID BEHAVIOR: Default behavior can be changed by changing "hybrid" to "fixed" or "fluid". -->
         <!-- CONTENT -->
         <main>
             <div id="header_bar">
                 <div id="toolbar">
                     <ul>
-                        <li><h1>Pullman  Campus Map</h1></li>
+                        <li><h1>Pullman Campus Map</h1></li>
                         <li style="float:left"><a href="#" ng-click="resetMap();" id="resetmap">Reset Map</a></li>
                         <li><a href="#" ng-click="showEmbed=true" id="embed">Link<span id="embedlink">/Embed</span></a></li>
                         <li><a href="#" ng-click="showReportErrorPopup()" class="errorReporting">Report Error</a></li>
@@ -21,13 +21,13 @@
                         <div id="listing" class="heightminusbar" tabindex="0" iscroll="{refreshInterval: 500}">
                             <ul id="mainnav" ng-show="!showDirections">
                                 <li ng-repeat="place in markers">
-                                    <a ng-click="showWindow(place)" ng-class="{active:map.window.model == place}"><span class="place_order">{{$index+1}}</span>{{place.prime_name}} <span ng-show="place.labels.prime_abbrev">({{place.labels.prime_abbrev}})</span></a>
+                                    <a ng-click="showWindow(place)" ng-class="{active:map.window.model == place}"><span class="place_order">{{$index+1}}</span>{{place.prime_name}} <span ng-show="place.abbrev_name">({{place.abbrev_name}})</span></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div id="centralmap" class="WSU_MAPS_NS" ng-class="{moveformenu:markers.length>0}">
+                <div id="centralmap" class="WSU_MAPS_NS" ng-class="{moveformenu: markers.length>0 && listingsopen && !ismobile || markers.length>0 && listingsopen && ismobile}">
                     <ui-gmap-google-map center='map.center' zoom='map.zoom' styles='map.styles' control='map.control' events='map.events' options='map.options'>
                         <ui-gmap-markers models='markers'
                                             icon="'icon'"

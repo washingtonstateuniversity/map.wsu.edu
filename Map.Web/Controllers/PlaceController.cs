@@ -40,6 +40,7 @@ namespace Map.Controllers
         [CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
         public place Get(int id)
         {
+			var place = placeService.Get(id);
             return placeService.Get(id);
         }
 

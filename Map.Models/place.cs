@@ -38,7 +38,8 @@ namespace Map.Models
         virtual public bool hideTitles { get; set; }
         virtual public bool autoAccessibility { get; set; }
         virtual public IList<place_names> names { get; set; }
-        virtual public IList<place_types> place_types { get; set; }
+		virtual public IList<place_types> place_types { get; set; }
+		[JsonIgnore]
         virtual public place_models model { get; set; }
         virtual public media_repo media { get; set; }
         virtual public string staticMap { get; set; }
@@ -52,7 +53,7 @@ namespace Map.Models
         virtual public IList<categories> categories { get; set; }
         virtual public IList<programs> programs { get; set; }
         virtual public IList<map_views> views { get; set; }
-        virtual public IList<fields> field { get; set; }
+        virtual public IList<fields> fields { get; set; }
         virtual public IList<tags> tags { get; set; }
         [JsonIgnore]
         virtual public IList<usertags> usertags { get; set; }

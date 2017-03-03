@@ -2,6 +2,7 @@
 WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope, $state, $timeout, localStorageService, mapService, uiGmapIsReady, iScrollService) {
 	var vm = this;  // Use 'controller as' syntax 
 	vm.iScrollState = iScrollService.state;
+
 	$scope.useragent = navigator.userAgent;
 	$scope.currentUrl = window.location.href;
 	$scope.embedW=495;
@@ -12,6 +13,8 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	mapService.getCategoryList().then(function(data){
 		$scope.categories = data;
 	});
+	$scope.ismobile = $scope.ismobile = jQuery(window).width() < 990;
+
 	// unclick any open menu items
 	$scope.clearTheMenu = function()
 	{
@@ -113,9 +116,12 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	var maxpanelwidth = "235px";
 	$scope.openListings = function()
 	{
+		// Close the menu
+		if ($scope.ismobile && $(".spine-mobile-open").length > 0)
+			$("#shelve").click();
+
 		jQuery("#selectedPlaceList").animate({ width: '235px'}).addClass("active");
-		//jQuery("#centralmap").animate({ marginLeft: maxpanelwidth});
-		//jQuery(".angular-google-map-container").animate({width: $(window).width() - spinewidth - 235});
+
 		$scope.listingsopen = true;
 		$timeout($scope.setMapDimensions, 400);
 	}
@@ -149,18 +155,21 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	// Handle clicking of either the icon on the map or the listing in the listing panel
 	$scope.showWindow = function(selectedPlace)
 	{
-		console.log(selectedPlace);
-		console.log($scope.map.window);
+		console.debug("selectedPlace", selectedPlace);
 		$scope.map.window.model = selectedPlace;
 		$scope.map.window.show = true;
-		var centerpoint = new google.maps.LatLng(selectedPlace.position.latitude,selectedPlace.position.longitude);
-		$scope.mapinstance.setCenter(centerpoint);
+		$scope.centerOnWindow();
 		$scope.mapinstance.setOptions({scrollwheel: false});
 		// There's a timing issue with waiting for the HTML to render and then calling the JS to setup tabs, etc.
-		$timeout(setupInfoWindow, 400);
-		$timeout(setupInfoWindow, 800);
+	//	$timeout(setupInfoWindow, 400);
+		//$timeout(setupInfoWindow, 800);
 		$timeout(setupInfoWindow, 1200);
 		$scope.showShape(selectedPlace);
+	}
+	$scope.centerOnWindow = function()
+	{		
+		var centerpoint = new google.maps.LatLng($scope.map.window.model.position.latitude, $scope.map.window.model.position.longitude);
+		$scope.mapinstance.setCenter(centerpoint);
 	}
 	$scope.showShapes = function()
 	{
@@ -213,8 +222,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		var spinefooter = $(".spine-footer").height();
 		var windowheight = $(window).height();
 		console.info("windowheight",windowheight);
-		var isMobile = $(".spine-mobile").length > 0;
+		var isMobile = $scope.ismobile;
 		var mapHeight = $(window).height() - $("#header_bar").height() - 4;
+		console.debug("header_bar", $("#header_bar").height());
 		console.debug("spine-mobile", $(".spine-mobile").length);
 		if(isMobile)
 		{
@@ -237,7 +247,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	}
 	
 	// Handle window resize
-	$(window).resize(function(){
+	$(window).resize(function () {
+		$scope.ismobile = jQuery(window).width() < 990;
+		
 		$scope.setMapDimensions();
 	}).trigger("resize");
 	
@@ -246,12 +258,17 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	{
 		if ($scope.markers.length > 0)
 		{
-			var bounds = new google.maps.LatLngBounds();
-			for (var i = 0; i< $scope.markers.length; i++) 
+			if($scope.map.window.model)
+				$scope.centerOnWindow();
+			else
 			{
-				bounds.extend(new google.maps.LatLng($scope.markers[i].position.latitude, $scope.markers[i].position.longitude));
+				var bounds = new google.maps.LatLngBounds();
+				for (var i = 0; i< $scope.markers.length; i++) 
+				{
+					bounds.extend(new google.maps.LatLng($scope.markers[i].position.latitude, $scope.markers[i].position.longitude));
+				}
+				$scope.mapinstance.fitBounds(bounds);
 			}
-			$scope.mapinstance.fitBounds(bounds);
 		}
 	}
 		
@@ -308,12 +325,51 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		},
 		polys: [],
 		window: {
-            show: false,
+			show: false,
+			parent: $scope,
             closeClick: function() {
                 this.show = false;
 				$scope.map.window.model = 0;
 				$scope.mapinstance.setOptions({scrollwheel: true});
             },
+            fieldIsntEmpty: function (field) {
+            	if (field && field.type) {
+            		var json = field.value;
+            		json = json.replace(/(\r\n|\n|\r)/gm, "");
+            		var fieldvalue = JSON.parse(json).selections[0].val;
+            		var fieldname = field.type.name;
+            		if (fieldvalue == "no" || fieldvalue === null)
+            			return false;
+
+            		return true;
+            	}
+            	return false;
+			},
+			isADA: function (field) {
+				console.log('isada');
+				var json = field.value;
+				json = json.replace(/(\r\n|\n|\r)/gm, "");
+				var fieldvalue = JSON.parse(json).selections[0].val;
+				var fieldname = field.type.name;
+				return fieldname.indexOf('ADA') >= 0;
+			},
+			isntADA: function (field) {
+				var json = field.value;
+				json = json.replace(/(\r\n|\n|\r)/gm, "");
+				var fieldvalue = JSON.parse(json).selections[0].val;
+				var fieldname = field.type.name;
+				return fieldname.indexOf('ADA') == -1;
+			},
+			getName: function() {
+				if ($scope.map.window.model.infoTitle)
+					return $scope.map.window.model.infoTitle;
+				if ($scope.map.window.model.prime_name)
+					return $scope.map.window.model.prime_name;
+				return "";
+			},
+			getImageLink:  function(placeid, imageid) {
+				return "http://map.wsu.edu/media/download.castle?placeid="+placeid+"&id="+imageid;
+			},
 			showReportErrorPopup: $scope.showReportErrorPopup,
             options: {
 					alignBottom:true,
@@ -403,18 +459,21 @@ function setupInfoWindow()
 {
 	jQuery('#popup').tabs(); 
 	var items = jQuery('.cWrap .items');
-	items.each(function() {
+	items.each(function () {
 		jQuery('.cWrap .items').cycle({
+			activePagerClass: "cycle-pager-active",
 			fx: 'scrollHorz',
 			delay: -2000,
 			pauseOnHover: 1,
 			pause: 1,
 			timeout: 0,
-			pager: jQuery(this).closest(".cycleArea").find('.cNav'),
+			pager: jQuery(".cycleArea").find('.cNav'),
+			pagerAnchorBuilder: function(idx, slide) {
+				return '<li><a href="#" hidefocus="true">'+ idx +'</a></li>';
+			},
 			prev: '.prev',
 			next: '.next',
-			slides: '> a',
-			pagerTemplate: '<li><a href="#" hidefocus="true">{{slideNum}}</a></li>'
+			slides: '> a'
 		});
 	});
 }

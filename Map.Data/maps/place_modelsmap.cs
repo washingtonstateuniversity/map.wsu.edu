@@ -12,6 +12,7 @@ namespace Map.Data
             Id(x => x.id, "place_model_id");
             Map(x => x.name);
             Map(x => x.attr);
+			HasMany(x => x.field_types).KeyColumn("fieldset");
             HasManyToMany(x => x.Places)
                 .Table("place_to_place_models")
                 .ParentKeyColumn("place_model_id")

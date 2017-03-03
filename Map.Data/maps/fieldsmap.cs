@@ -9,7 +9,7 @@ namespace Map.Data
         public fieldsmap()
         {
             Id(x => x.id, "field_id");
-            HasOne(x => x.type);
+            References(x => x.type).NotFound.Ignore();
             Map(x => x.owner);
             Map(x => x.value);
         }
