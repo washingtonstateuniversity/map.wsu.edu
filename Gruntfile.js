@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
         watch: {
             styles: {
-                files: [ "Map.Web/Content/css/*.less" ],
+                files: [ "Map.Web/Content/css/*.less", "Map.Web/Content/**/*.js"  ],
                 tasks: [ "default" ],
                 option: {
                     livereload: 8000
@@ -163,6 +163,6 @@ module.exports = function(grunt) {
 	
 
     // Default task(s).
-    grunt.registerTask( "default", [ "lesshint", "less", "sed", "stylelint", "uglify" ] );
-    grunt.registerTask( "serve", [ "connect", "watch" ] );
+    grunt.registerTask( "default", [ "lesshint", "jshint", "less", "sed", "stylelint", "uglify" ] );
+	grunt.registerTask( "work", [ "lesshint", "jshint", "less", "sed", "stylelint",  "watch" ] );
 };
