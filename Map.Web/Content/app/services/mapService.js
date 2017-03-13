@@ -22,7 +22,7 @@ WSUApp.factory('myCache', function($cacheFactory) {
 				{
 					deferred.resolve(response.data);
 				},
-                function (response) 
+                function (response)
                 {
                     deferred.reject(response.data);
                 }
@@ -49,7 +49,7 @@ WSUApp.factory('myCache', function($cacheFactory) {
 				{
 					deferred.resolve(response.data);
                 },
-                function (reponse) 
+                function (response)
                 {
                     deferred.reject(response.data);
                 });
@@ -65,7 +65,7 @@ WSUApp.factory('myCache', function($cacheFactory) {
 			.error(function (data, status, header, config) {
 				deferred.reject(data);
 			});
-			return deferred.promise;	
+			return deferred.promise;
         }
     };
 });

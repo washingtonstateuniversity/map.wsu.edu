@@ -2,7 +2,14 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        stylelint: {
+		jshint: {
+			all: ['Gruntfile.js', 'Map.Web/Content/App/**/*.js'],
+			options : {
+				jshintrc : '.jshintrc'
+			}
+		},
+		
+		stylelint: {
             src: [ "Map.Web/Content/css/main.css" ]
         },
 
