@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-    public class media_repo 
+    public class media_repo
     {
         virtual public int id { get; set; }
         virtual public string credit { get; set; }
@@ -24,5 +24,4 @@ namespace Map.Models
         virtual public IList<advertisement> Advertisements { get; set; }
         virtual public IList<fields> field { get; set; }
     }
-
 }

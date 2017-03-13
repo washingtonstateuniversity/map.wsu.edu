@@ -63,7 +63,6 @@ namespace Map.Data
                 .ChildKeyColumn("author_id")
                 .NotFound.Ignore();
 
-
             // Publish base
             Map(x => x.creation_date);
             HasOne(x => x.editing);

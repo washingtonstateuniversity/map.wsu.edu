@@ -15,5 +15,4 @@ namespace Map.Models {
         [JsonIgnore]
         virtual public IList<place> places { get; set; }
     }
-
 }

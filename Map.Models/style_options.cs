@@ -5,8 +5,7 @@ using System.Web.Script.Serialization;
 
 namespace Map.Models
 {
-
-    public class style_options 
+    public class style_options
     {
         virtual public int id { get; set; }
         virtual public style_option_types type { get; set; }
@@ -14,6 +13,4 @@ namespace Map.Models
         virtual public zoom_levels zoom { get; set; }
         virtual public string value { get; set; }
     }
-        
 }
-

@@ -75,6 +75,4 @@ namespace Map.Models {
         [JsonIgnore]
         virtual public IList<users> Authors { get; set; }
     }
-
 }
-

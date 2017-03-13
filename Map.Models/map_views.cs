@@ -35,4 +35,3 @@ namespace Map.Models {
         virtual public String options_obj { get; set; }
     }
 }
-

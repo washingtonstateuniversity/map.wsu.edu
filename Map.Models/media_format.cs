@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Map.Models
 {
-    public class media_format 
+    public class media_format
     {
         virtual public int id { get; set; }
         virtual public string name { get; set; }

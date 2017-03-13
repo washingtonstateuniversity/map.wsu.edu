@@ -10,23 +10,23 @@
 		<!-- Overview -->
 		<div id="tabs-0" class="ui-tabs-panel ui-widget-content ui-corner-bottom resp" style="" aria-labelledby="ui-id-2" role="tabpanel" aria-hidden="false">
 			<div class="content Overview" style="width: 355px;">
-				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name">({{parameter.model.abbrev_name}})</span></h2>
-				<a href="{{parameter.getImageLink(parameter.model.id,parameter.model.Images[0].id)}}" alt="" hidefocus="true" rel="gouped" class="gouped headImage orientation_h" target="_blank" ng-show="parameter.model.Images.length > 0"> 
-					<img ng-src="https://map.wsu.edu/media/download.castle?placeid={{parameter.model.id}}&amp;id={{parameter.model.Images[0].id}}&amp;m=crop&amp;w=135&amp;h=75" rel="gouped" class="grouped headImage orientation_h" width="135" height="75"> 
+				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name.trim()">({{parameter.model.abbrev_name.trim()}})</span></h2>
+				<a href="{{parameter.getImageLink(parameter.model.Images[0].id)}}" alt="" hidefocus="true" rel="gouped" class="gouped headImage orientation_h" target="_blank" ng-show="parameter.model.Images.length > 0"> 
+					<img ng-src="/api/v1/media/{{parameter.model.Images[0].id}}?placeid={{parameter.model.id}}&m=crop&w=135&h=75" rel="gouped" class="grouped headImage orientation_h" width="135" height="75"> 
 				</a>
 				<p ng-bind-html="parameter.model.details"></p>
 			</div>
-			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
+			<a class="directionsTo" href="#" ng-click="parameter.showDirectionsFrom(parameter.model);">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
 		</div>
 		<!-- What's Here -->
 		<div id="tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom resp" style="display: none;" aria-labelledby="ui-id-3" role="tabpanel" aria-hidden="false" ng-show="(parameter.model.fields | filter:parameter.fieldIsntEmpty | filter:parameter.isntADA).length > 0">
 			<div class="content What_s_Here" style="width: 345px;">
-				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name">({{parameter.model.abbrev_name}})</span></h2>
+				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name.trim()">({{parameter.model.abbrev_name.trim()}})</span></h2>
 				<ul> 
 					<li ng-repeat="onefield in parameter.model.fields | filter: parameter.fieldIsntEmpty | filter: parameter.isntADA"><strong>{{onefield | getfieldname}}</strong><span ng-bind-html="onefield | getfieldvalue" ng-show="(onefield | getfieldvalue) != 'yes'"></span></li>
 				</ul>
 			</div>
-			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
+			<a class="directionsTo" href="#" ng-click="parameter.showDirectionsFrom(parameter.model);">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
 		</div>
 		<!-- Views -->
 		<div id="tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom resp" style="display:none;" aria-labelledby="ui-id-4" role="tabpanel" aria-hidden="false" ng-show="parameter.model.Images.length > 0">
@@ -36,7 +36,7 @@
 						<a href="#" class="prev" hidefocus="true" target="_blank">Prev</a>
 						<div class="cWrap">
 							<div class="items">
-								<a ng-repeat="oneimage in parameter.model.Images" href="{{parameter.getImageLink(parameter.model.id,oneimage.id)}}"><img ng-src="{{'http://map.wsu.edu/media/download.castle?placeid='+parameter.model.id+'&amp;id='+oneimage.id+'&m=constrain&h=190'}}"></a>
+								<a ng-repeat="oneimage in parameter.model.Images" href="{{parameter.getImageLink(oneimage.id)}}"><img ng-src="/api/v1/media/{{oneimage.id}}?placeid={{parameter.model.id}}&m=constrain&h=190"></a>
 							</div>
 						</div>
 						<a href="#" class="next" hidefocus="true" target="_blank">Next</a>
@@ -44,17 +44,17 @@
 					</div>
 				</div>
 			</div>
-			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
+			<a class="directionsTo" href="#" ng-click="parameter.showDirectionsFrom(parameter.model);">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
 		</div>
 		<!-- ADA TAB -->
 		<div id="tabs-3" class="ui-tabs-panel ui-widget-content ui-corner-bottom resp" style="display: none;" aria-labelledby="ui-id-5" role="tabpanel" aria-hidden="false" ng-show="(parameter.model.fields | filter:parameter.fieldIsntEmpty | filter:parameter.isADA).length > 0">
 			<div class="content" style="width: 345px;">
-				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name">({{parameter.model.abbrev_name}})</span></h2>
+				<h2 class="header"><span class="iw_id">{{parameter.model.number}}</span>{{parameter.getName()}} <span ng-show="parameter.model.abbrev_name.trim()">({{parameter.model.abbrev_name.trim()}})</span></h2>
 				<ul>
 					<li ng-repeat="onefield in parameter.model.fields | filter: parameter.fieldIsntEmpty | filter: parameter.isADA"><strong>{{onefield | getfieldname}}</strong><span ng-bind-html="onefield | getfieldvalue"></span></li>
 				</ul>
 			</div>
-			<a class="directionsTo" href="#">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
+			<a class="directionsTo" href="#" ng-click="parameter.showDirectionsFrom(parameter.model);">Directions to</a><a class="errorReporting" href="#" ng-click="parameter.showReportErrorPopup(parameter.model.id, parameter.model.summary)">Report&nbsp;&nbsp;error</a>
 		</div>
 	</div>
 </div>

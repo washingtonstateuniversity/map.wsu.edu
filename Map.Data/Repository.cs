@@ -33,7 +33,7 @@ namespace Map.Data
         }
 
         public T Load<T>(object id)
-        { 
+        {
             return session.Load<T>(id);
         }
 
@@ -77,6 +77,7 @@ namespace Map.Data
             {
                 criteria.SetMaxResults(pageSize);
             }
+
             return criteria.List<T>();
         }
 
@@ -93,6 +94,7 @@ namespace Map.Data
                 ICriterion cr1 = Expression.Sql(s);
                 objs.Add(cr1);
             }
+
             ICriteria criteria = session.CreateCriteria(typeof(T));
             foreach (ICriterion rest in objs)
                 session.CreateCriteria(typeof(T)).Add(rest);
@@ -137,8 +139,8 @@ namespace Map.Data
         public IList<T> GetAllOrdered<T>(string propertyName, bool ascending)
         {
             Order cr1 = new Order(propertyName, ascending);
-            IList<T> objsResult = session.CreateCriteria
-                (typeof(T)).AddOrder(cr1).List<T>();
+            IList<T> objsResult = session.CreateCriteria(typeof(T)).AddOrder(cr1).List<T>();
+
             return objsResult;
         }
     }

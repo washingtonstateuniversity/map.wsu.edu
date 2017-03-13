@@ -14,7 +14,6 @@ namespace Map.Data.Services
 {
     public class PlaceService : IPlaceService
 	{
-
         public IEnumerable<searchPlace> Search(string query)
         {
             List<searchPlace> results = new List<searchPlace>();
@@ -48,6 +47,7 @@ namespace Map.Data.Services
                     }
                 }
             }
+
             return results.Distinct<searchPlace>();
         }
 
@@ -56,7 +56,7 @@ namespace Map.Data.Services
             IRepository<place> repo = new Repository<place>();
             return repo.GetAll<place>();
         }
-        
+
         public place Get(int id)
         {
             IRepository<place> repo = new Repository<place>();

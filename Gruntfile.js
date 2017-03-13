@@ -19,42 +19,17 @@ module.exports = function(grunt) {
                 }
             }
         },
-
-        lesslint: {
-            src: [ 'Map.Web/Content/css/main.less' ],
-            options: {
-                csslint: {
-                    "fallback-colors": false,              // Unless we want to support IE8
-                    "box-sizing": false,                   // Unless we want to support IE7
-                    "compatible-vendor-prefixes": false,   // The library on this is older than autoprefixer.
-                    "gradients": false,                    // This also applies ^
-                    "overqualified-elements": false,       // We have weird uses that will always generate warnings.
-                    "ids": false,
-                    "regex-selectors": false,
-                    "adjoining-classes": false,
-                    "box-model": false,
-                    "universal-selector": false,
-                    "unique-headings": false,
-                    "outline-none": false,
-                    "floats": false,
-                    "font-sizes": false,
-                    "important": false,                    // This should be set to 2 one day.
-                    "unqualified-attributes": false,       // Should probably be 2 one day.
-                    "qualified-headings": false,
-                    "known-properties": false,                 // Okay to ignore in the case of known unknowns.
-                    "duplicate-background-images": false,  // This should ideally be 2
-                    "duplicate-properties": false, // @todo should be 2
-                    "star-property-hack": 2,
-                    "text-indent": 2,
-                    "display-property-grouping": 2,
-                    "shorthand": 2,
-                    "empty-rules": false,
-                    "vendor-prefix": 2,
-                    "zero-units": 2,
-                    "order-alphabetical": false
+		
+		lesshint: {			
+			useLesshintRc: {
+                options: {
+                    lesshintrc : '.lesshintrc'
+                },
+                files: {
+                    src: [ 'Map.Web/Content/css/main.less' ]
                 }
             }
-        },
+		},
 
         watch: {
             styles: {
@@ -111,15 +86,6 @@ module.exports = function(grunt) {
 			}
 		},
  
-        connect: {
-            server: {
-                options: {
-                    open: true,
-                    port: 8000,
-                    hostname: "localhost"
-                }
-            }
-        },
 		uglify: {
 			min: {
 			  files: {
@@ -146,6 +112,7 @@ module.exports = function(grunt) {
 				compress: true
 			  }
 			},
+			
 			pretty: {
 				files: {
 					'Map.Web/Content/js/vendor/output.js': [	"bower_components/jquery/dist/jquery.min.js",
@@ -171,7 +138,7 @@ module.exports = function(grunt) {
 				compress: false
 				}
 			}						
-		  }
+		}
     });
 
 
@@ -179,18 +146,16 @@ module.exports = function(grunt) {
 	
 	grunt.loadNpmTasks( "grunt-contrib-clean" );
 	grunt.loadNpmTasks( "grunt-contrib-copy" );
-    grunt.loadNpmTasks( "grunt-contrib-csslint" );
-    grunt.loadNpmTasks( "grunt-contrib-connect" );
+	grunt.loadNpmTasks( "grunt-contrib-jshint" ); 
     grunt.loadNpmTasks( "grunt-contrib-less" );
 	grunt.loadNpmTasks( "grunt-contrib-uglify" );
     grunt.loadNpmTasks( "grunt-contrib-watch" );
-	grunt.loadNpmTasks( "grunt-lesslint" );
-    grunt.loadNpmTasks( "grunt-phpcs" );
+	grunt.loadNpmTasks( 'grunt-lesshint' );
 	grunt.loadNpmTasks( "grunt-sed" );
     grunt.loadNpmTasks( "grunt-stylelint" );
 	
 
     // Default task(s).
-    grunt.registerTask( "default", [ "less", "sed", "stylelint", "uglify" ] );
+    grunt.registerTask( "default", [ "lesshint", "less", "sed", "stylelint", "uglify" ] );
     grunt.registerTask( "serve", [ "connect", "watch" ] );
 };

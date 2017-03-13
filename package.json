@@ -1,5 +1,5 @@
 {
-  "name": "wsu-map.wsu.edu",
+  "name": "map.wsu.edu",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -13,13 +13,13 @@
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-csslint": "^2.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-less": "^1.4.0",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-indent": "^0.1.5",
+    "grunt-lesshint": "^1.4.0",
     "grunt-lesslint": "^3.2.0",
-    "grunt-phpcs": "^0.4.0",
-    "grunt-postcss": "^0.8.0",
     "grunt-sed": "^0.1.1",
     "grunt-stylelint": "^0.6.0",
     "less": "^2.7.2",

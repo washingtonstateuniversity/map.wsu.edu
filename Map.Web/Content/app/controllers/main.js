@@ -9,12 +9,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	$scope.embedH=372;
 	$scope.showPrintable = false;
 	$scope.showDirections = false;
-	// Menu setup -- We dynamically get the JSON feed to make the menu
-	mapService.getCategoryList().then(function(data){
-		$scope.categories = data;
-	});
-	$scope.ismobile = $scope.ismobile = jQuery(window).width() < 990;
-
+	
+	$scope.ismobile = jQuery(window).width() < 990;
+	
 	// unclick any open menu items
 	$scope.clearTheMenu = function()
 	{
@@ -30,9 +27,20 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		$scope.map.center.longitude = center_lng;
 		$scope.map.zoom = defaultzoom;
 	}
+
+	// get category by name
+	$scope.getCategoryByName = function(searchname)
+	{
+		for (var i = 0; i < $scope.categories.length; i++) {
+			if ($scope.categories[i].name === searchname || $scope.categories[i].friendly_name === searchname) {
+				return $scope.categories[i];
+			}
+		}
+	}
 	// They clicked a menu item
 	$scope.toggleActiveMenuItem = function(clickedCategory)
 	{
+		var deferred = $q.defer();
 		$scope.map.polys = [];
 		$scope.map.window.show = false;
 		// if this was called with a null category
@@ -74,40 +82,50 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		mapService.getPlaceObjByCategories(searchids).then(
 			function(markers)
 			{
-				var width=parseInt(30);
-				var height=parseInt(50);
 				$scope.markers = markers;
 				for(var i=0; i < $scope.markers.length; i++)
 				{
-					$scope.markers[i].icon = {
-						url: '/api/v1/marker/' + (i + 1),
-						size: new google.maps.Size(width,height),
-						scaledSize: new google.maps.Size(width, height),
-						origin: new google.maps.Point(0,0), 
-						anchor: new google.maps.Point(width/2, height/2)
-					};
-					$scope.markers[i].position = {};
-					$scope.markers[i].position.latitude = $scope.markers[i].latitude;
-					$scope.markers[i].position.longitude = $scope.markers[i].longitude;
-					$scope.markers[i].number = i+1;
-					$scope.markers[i].markeroptions = {
-						optimized: false
-					}
+					$scope.prepMarker($scope.markers[i], i+1);
 				}	
 				$scope.showShapes();
 				$scope.openListings();
 				$scope.resetAllScrollers($rootScope.myScroll, 250);
+				deferred.resolve();
 			}
 		);
+		return deferred.promise;
 	}
-	$scope.loadOnePlace = function(place)
+	$scope.prepMarker = function(marker, i)
 	{
-		mapService.getPlaceById(place.id).then(function (data) {
-			console.info("getplacebyid", data);
-			$scope.markers = data;
-			if(data)
-				$scope.showWindow(data.markers[0]);
+		var width = parseInt(30);
+		var height = parseInt(50);
+
+		marker.icon = {
+			url: '/api/v1/marker/' + (i),
+			size: new google.maps.Size(width, height),
+			scaledSize: new google.maps.Size(width, height),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(width / 2, height / 2)
+		};
+		marker.position = {};
+		marker.position.latitude = marker.latitude;
+		marker.position.longitude = marker.longitude;
+		marker.number = i;
+		marker.markeroptions = {
+			optimized: false
+		}
+	}
+	$scope.loadOnePlace = function(id)
+	{
+		mapService.getPlaceById(id).then(function (marker) {
+			$scope.prepMarker(marker, 1);
+			console.info("getplacebyid", marker);
+			$scope.markers = [];
+			$scope.markers.push(marker);
+			if (marker)
+				$scope.showWindow(marker);
 			$scope.closeListings();
+			$scope.clearTheMenu();
 		});
 		$rootScope.searchplaces = [];
 		$scope.searchterm = "";
@@ -132,10 +150,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		if(width > 0)
 		{
 			jQuery("#selectedPlaceList").animate({ width: 0}).removeClass("active");
-			//jQuery("#centralmap").animate({ marginLeft: 0});
 			$scope.listingsopen = false;
 		}
-		//jQuery(".angular-google-map-container").animate({width: $(window).width() - spinewidth});
+
 		$timeout($scope.setMapDimensions, 400);
 		$timeout($scope.setMapDimensions, 2400);
 	}
@@ -160,9 +177,7 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		$scope.map.window.show = true;
 		$scope.centerOnWindow();
 		$scope.mapinstance.setOptions({scrollwheel: false});
-		// There's a timing issue with waiting for the HTML to render and then calling the JS to setup tabs, etc.
-	//	$timeout(setupInfoWindow, 400);
-		//$timeout(setupInfoWindow, 800);
+
 		$timeout(setupInfoWindow, 1200);
 		$scope.showShape(selectedPlace);
 	}
@@ -186,7 +201,7 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 			var decodedPath = google.maps.geometry.encoding.decodePath(place.shapes[0].encoded);
 			var events = JSON.parse(place.shapes[0].style[0].style_obj).events;
 			var strokecolor = events.rest.strokeColor;
-			var strokeopacity = events.rest.strokeOpacity
+			var strokeopacity = events.rest.strokeOpacity;
 			var fillcolor = events.rest.fillColor;
 			var fillopacity = events.rest.fillOpacity;
 			var strokeweight = events.rest.strokeWeight;
@@ -211,7 +226,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	var spinewidth = 0; 
 	var defaultzoom = 15;
 	$scope.listingsopen = false;
-	$scope.setMapDimensions = function(extrawidth){
+
+
+	$scope.setMapDimensions = function (extrawidth) {
 		var markerlistingswidth = 0;
 		
 		if($scope.listingsopen)
@@ -221,12 +238,11 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		var placesearch = $("#placeSearch").height();
 		var spinefooter = $(".spine-footer").height();
 		var windowheight = $(window).height();
-		console.info("windowheight",windowheight);
+
 		var isMobile = $scope.ismobile;
 		var mapHeight = $(window).height() - $("#header_bar").height() - 4;
-		console.debug("header_bar", $("#header_bar").height());
-		console.debug("spine-mobile", $(".spine-mobile").length);
-		if(isMobile)
+
+		if (isMobile)
 		{
 			mapHeight -= $(".spine-header").height();
 			spinewidth = 0;
@@ -248,8 +264,7 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 	
 	// Handle window resize
 	$(window).resize(function () {
-		$scope.ismobile = jQuery(window).width() < 990;
-		
+		$scope.ismobile = jQuery(window).width() < 990;		
 		$scope.setMapDimensions();
 	}).trigger("resize");
 	
@@ -320,8 +335,13 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
             }
 		},
 		options: {
-			mapTypeControl: false,
-			disableDefaultUI: true
+			disableDefaultUI: true,
+			zoomControl: true,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+				position: google.maps.ControlPosition.TOP_RIGHT
+			}
 		},
 		polys: [],
 		window: {
@@ -338,7 +358,7 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
             		json = json.replace(/(\r\n|\n|\r)/gm, "");
             		var fieldvalue = JSON.parse(json).selections[0].val;
             		var fieldname = field.type.name;
-            		if (fieldvalue == "no" || fieldvalue === null)
+            		if (fieldvalue === "no" || fieldvalue === null)
             			return false;
 
             		return true;
@@ -346,7 +366,6 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
             	return false;
 			},
 			isADA: function (field) {
-				console.log('isada');
 				var json = field.value;
 				json = json.replace(/(\r\n|\n|\r)/gm, "");
 				var fieldvalue = JSON.parse(json).selections[0].val;
@@ -358,7 +377,7 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 				json = json.replace(/(\r\n|\n|\r)/gm, "");
 				var fieldvalue = JSON.parse(json).selections[0].val;
 				var fieldname = field.type.name;
-				return fieldname.indexOf('ADA') == -1;
+				return fieldname.indexOf('ADA') === -1;
 			},
 			getName: function() {
 				if ($scope.map.window.model.infoTitle)
@@ -367,37 +386,82 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 					return $scope.map.window.model.prime_name;
 				return "";
 			},
-			getImageLink:  function(placeid, imageid) {
-				return "http://map.wsu.edu/media/download.castle?placeid="+placeid+"&id="+imageid;
+			getImageLink:  function(imageid) {
+				return "/api/v1/media/"+imageid +"?placeid="+$scope.map.window.model.id;
 			},
+			showDirectionsFrom: function (place) { $scope.showDirectionsFrom(place); },
 			showReportErrorPopup: $scope.showReportErrorPopup,
             options: {
 					alignBottom:true,
 					boxClass: "infoBox",
 					disableAutoPan: false,
 					height:"340px",
-					pixelOffset: new google.maps.Size(-200, (-30)),
+					pixelOffset: new google.maps.Size(-200, -30),
 					zIndex: 999,
 					boxStyle: {
-						width: (400)+"px"
+						width: 400 +"px"
 					},
 					infoBoxClearance: new google.maps.Size(75,60),
 					isHidden: false,
 					scrollWheel:false,
 					pane: "floatPane",
-					enableEventPropagation: false,
+					enableEventPropagation: false
 				}
         }
 	};
 	// This will hold the map instance variable once it's initialized
 	$scope.mapinstance = {};
+	$scope.directionService = null;
+	$scope.directionsDisplay = null;
 	// Round about way to get map object
 	uiGmapIsReady.promise(1).then(function(instances) {
         instances.forEach(function(inst) {
             var map = inst.map;
-			$scope.mapinstance = map;
+            $scope.mapinstance = map;
+            $scope.directionService = new google.maps.DirectionsService();
+            $scope.directionsDisplay = new google.maps.DirectionsRenderer();
+            setupSavedCategoriesAndPlaceMap();
         });
-    });
+	});
+
+	$scope.showDirectionsFrom = function(place)
+	{
+		console.info('showdirections',place);
+		var request = { origin: "Pullman, WA", destination: place.latitude+","+place.longitude, optimizeWaypoints: true, travelMode: google.maps.TravelMode.DRIVING }; 
+		
+		$scope.directionService.route(request, function (response, status) {
+			console.log(response);
+			$scope.directionsDisplay.setDirections(response);
+			$scope.directionsDisplay.setMap($scope.mapinstance);
+			$scope.directions = response;
+			$scope.$apply();
+		});
+	}
+
+	$scope.drawDirectionsPath = function(googleDirections)
+	{
+		var decodedPath = google.maps.geometry.encoding.decodePath(place.shapes[0].encoded);
+		var events = JSON.parse(place.shapes[0].style[0].style_obj).events;
+		var strokecolor = events.rest.strokeColor;
+		var strokeopacity = events.rest.strokeOpacity;
+		var fillcolor = events.rest.fillColor;
+		var fillopacity = events.rest.fillOpacity;
+		var strokeweight = events.rest.strokeWeight;
+
+		place.shapes[0].fill = { "color": fillcolor, "opacity": fillopacity };
+		place.shapes[0].stroke = { "color": strokecolor, "weight": strokeweight, "opacity": strokeopacity };
+		place.shapes[0].path = decodedPath;
+		for (var i = 0; i < place.shapes[0].path.length; i++) {
+			place.shapes[0].path[i].latitude = place.shapes[0].path[i].lat();
+			place.shapes[0].path[i].longitude = place.shapes[0].path[i].lng();
+		}
+		place.shapes[0].id = place.id;
+		place.shapes[0].editable = true;
+
+		$scope.map.polys.push(place.shapes[0]);
+
+	}
+
 	$scope.getDirections = function() {
 		var request = { origin: "Pullman, WA", destination: "Genesee, ID", optimizeWaypoints: true, travelMode: google.maps.TravelMode.DRIVING }; 
 		var directionService = new google.maps.DirectionsService();
@@ -431,6 +495,8 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		$rootScope.searchplaces = [];
 		$scope.searchterm = "";
 	}
+	
+	// Watch the input
 	$scope.$watch("searchterm", function (newValue, oldValue, scope) {
 		if(newValue && newValue.length > 2)
 		{
@@ -439,7 +505,9 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 		else
             $rootScope.searchplaces = [];
 	}, true);
-	$scope.getLocation = function(val) {
+
+	// Called by code watching the search input
+	$scope.getLocation = function (val) {
 		var searchInputOffsetFromTop = $("#searchterm").height()+$("#searchterm").offset().top;
 		// Adjust autocomplete lcoation
 		$(".ui-autocomplete").css("top", searchInputOffsetFromTop+"px");
@@ -451,38 +519,62 @@ WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope
 			$rootScope.searchplaces = data;
 		}); 	
 	};
+
+	/* HELPER FUNCTIONS */
+	function setupInfoWindow() {
+		jQuery('#popup').tabs();
+		var items = jQuery('.cWrap .items');
+		items.each(function () {
+			jQuery('.cWrap .items').cycle({
+				activePagerClass: "cycle-pager-active",
+				fx: 'scrollHorz',
+				delay: -2000,
+				pauseOnHover: 1,
+				pause: 1,
+				timeout: 0,
+				pager: jQuery(".cycleArea").find('.cNav'),
+				pagerAnchorBuilder: function (idx, slide) {
+					return '<li><a href="#" hidefocus="true">' + idx + '</a></li>';
+				},
+				prev: '.prev',
+				next: '.next',
+				slides: '> a'
+			});
+		});
+	}
+
+	function sortResults(json, prop, asc) {
+		json = json.sort(function (a, b) {
+			if (asc) return a[prop] > b[prop] ? 1 : a[prop] < b[prop] ? -1 : 0;
+			else return b[prop] > a[prop] ? 1 : b[prop] < a[prop] ? -1 : 0;
+		});
+		return json;
+	}
+	
+	// Called after google map is ready
+	// Open cateogry and clicked place from small url
+	function setupSavedCategoriesAndPlaceMap() {
+		// Menu setup -- We dynamically get the JSON feed to make the menu
+		mapService.getCategoryList().then(function (data) {
+			$scope.categories = data;
+			$scope.clearTheMenu();
+			if (map_view.categories) {
+				// Setup saved category
+				var clickedcat = $scope.getCategoryByName(map_view.categories);
+				if (clickedcat) {
+					$scope.toggleActiveMenuItem(clickedcat).then(function () {
+						// Setup saved place
+						if (map_view.activePlace !== null) {
+							for (var i = 0; i < $scope.markers.length; i++) {
+								console.log($scope.markers[i].id);
+								if ($scope.markers[i].id === map_view.activePlace)
+									$scope.showWindow($scope.markers[i]);
+							}
+						}
+					});
+				}
+			}
+		});
+	}
 });
 
-
-/* HELPER FUNCTIONS */
-function setupInfoWindow()
-{
-	jQuery('#popup').tabs(); 
-	var items = jQuery('.cWrap .items');
-	items.each(function () {
-		jQuery('.cWrap .items').cycle({
-			activePagerClass: "cycle-pager-active",
-			fx: 'scrollHorz',
-			delay: -2000,
-			pauseOnHover: 1,
-			pause: 1,
-			timeout: 0,
-			pager: jQuery(".cycleArea").find('.cNav'),
-			pagerAnchorBuilder: function(idx, slide) {
-				return '<li><a href="#" hidefocus="true">'+ idx +'</a></li>';
-			},
-			prev: '.prev',
-			next: '.next',
-			slides: '> a'
-		});
-	});
-}
-
-function sortResults(json, prop, asc) 
-{
-    json = json.sort(function(a, b) {
-        if (asc) return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
-        else return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
-    });
-    return json;
-}

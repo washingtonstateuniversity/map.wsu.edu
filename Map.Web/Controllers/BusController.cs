@@ -14,10 +14,8 @@ using System.Threading.Tasks;
 using System.Text;
 using System.IO;
 
-
 namespace Map.Controllers
 {
-    
     public class BusController : BaseController
     {
         [HttpGet]
@@ -25,7 +23,7 @@ namespace Map.Controllers
         [Route("api/v1/bus/route")]
         public HttpResponseMessage routes()
         {
-            return JsonString( new WebClient().DownloadString("https://pullman.mytransitride.com/api/Route") );
+            return this.JsonString(new WebClient().DownloadString("https://pullman.mytransitride.com/api/Route"));
         }
 
         [HttpGet]
@@ -35,15 +33,20 @@ namespace Map.Controllers
         {
             String[] patternIdsArray = patternIds.Split(',');
             String url = "https://pullman.mytransitride.com/api/VehicleStatuses?patternIds%5B%5D=";
-            if (patternIdsArray.Length > 0)
-                url += patternIdsArray[0];
+			if (patternIdsArray.Length > 0)
+			{
+				url += patternIdsArray[0];
+			}
+
             foreach (String patternId in patternIdsArray)
             {
-                if (patternId != patternIdsArray[0])
-                    url += "&patternIds%5B%5D=" + patternId;
+				if (patternId != patternIdsArray[0])
+				{
+					url += "&patternIds%5B%5D=" + patternId;
+				}
             }
 
-            return JsonString( new WebClient().DownloadString(url) );
+            return this.JsonString(new WebClient().DownloadString(url));
         }
 
         [HttpGet]
@@ -52,7 +55,7 @@ namespace Map.Controllers
         public HttpResponseMessage getBusRouteDetails(int patternId)
         {
             String url = "https://pullman.mytransitride.com/api/PatternBuilder?patternId=" + patternId;
-            return JsonString( new WebClient().DownloadString(url) );
+            return this.JsonString(new WebClient().DownloadString(url));
         }
 
         [HttpGet]
@@ -61,7 +64,7 @@ namespace Map.Controllers
         public HttpResponseMessage getPatternsForBusStop(int stopId)
         {
             String url = "https://pullman.mytransitride.com/api/Route?StopId=" + stopId;
-            return JsonString( new WebClient().DownloadString(url) );
+            return this.JsonString(new WebClient().DownloadString(url));
         }
 
         [HttpGet]
@@ -70,7 +73,7 @@ namespace Map.Controllers
         public HttpResponseMessage getPredictionDataForBusStop(int stopId)
         {
             String url = "https://pullman.mytransitride.com/api/PredictionData?stopid=" + stopId;
-            return JsonString( new WebClient().DownloadString(url) );
+            return this.JsonString(new WebClient().DownloadString(url));
         }
     }
 }

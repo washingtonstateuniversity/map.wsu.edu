@@ -19,12 +19,11 @@ namespace Map.Data.Services
 			var category = repo.GetReference<categories>(CategoryId);
 			List<place> placesToReturn = new List<place>();
 			placesToReturn.AddRange(category.Places);
-			/*var parent = category.Parent;
-			while (parent != null)
+
+			foreach (var child in category.Children)
 			{
-				placesToReturn.AddRange(parent.Places);
-				parent = parent.Parent;
-			}*/
+				placesToReturn.AddRange(child.Places);
+			}
 
 			return placesToReturn.Distinct<place>().OrderBy(p => p.prime_name);
 		}

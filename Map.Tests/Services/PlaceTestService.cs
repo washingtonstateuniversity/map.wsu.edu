@@ -8,23 +8,25 @@ using Map.Models;
 
 namespace Map.Tests.Services
 {
-	class PlaceTestService : IPlaceService
+	public class PlaceTestService : IPlaceService
 	{
-		List<place> placeList = new List<place>();
+		private List<place> placeList = new List<place>();
 		public PlaceTestService()
 		{
-			placeList.Add(new place(1, "Steam plant"));
-			placeList.Add(new place(2, "Martin Stadium"));
-			placeList.Add(new place(3, "CUB"));
-			placeList.Add(new place(4, "REC Center"));
+			this.placeList.Add(new place(1, "Steam plant"));
+			this.placeList.Add(new place(2, "Martin Stadium"));
+			this.placeList.Add(new place(3, "CUB"));
+			this.placeList.Add(new place(4, "REC Center"));
 		}
+
 		public place Get(int id)
 		{
-			foreach(place oneplace in placeList)
+			foreach (place oneplace in placeList)
 			{
 				if (oneplace.id == id)
 					return oneplace;
 			}
+
 			return null;
 		}
 
@@ -39,8 +41,11 @@ namespace Map.Tests.Services
 			foreach (place oneplace in placeList)
 			{
 				if (!String.IsNullOrEmpty(oneplace.prime_name) && oneplace.prime_name.Contains(query))
-					returnlist.Add( new searchPlace(oneplace.prime_name, oneplace.prime_name, oneplace.id) );
+				{
+					returnlist.Add(new searchPlace(oneplace.prime_name, oneplace.prime_name, oneplace.id));
+				}
 			}
+
 			return returnlist;
 		}
 	}

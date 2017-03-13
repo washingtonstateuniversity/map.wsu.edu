@@ -32,4 +32,3 @@ namespace Map.Models
 		virtual public IList<user_groups> access_levels { get; set; }
     }
 }
-

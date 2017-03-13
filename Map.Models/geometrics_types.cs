@@ -20,4 +20,3 @@ namespace Map.Models {
         virtual public IList<style_option_types> ops { get; set; }
     }
 }
-

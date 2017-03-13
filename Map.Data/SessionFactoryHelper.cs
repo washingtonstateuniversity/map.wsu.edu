@@ -17,19 +17,20 @@ namespace Map.Data
         public static ISessionFactory CreateSessionFactory()
         {
             var c = Fluently.Configure();
-			
+
             //Replace connectionstring and default schema
             c.Database(MsSqlConfiguration.MsSql2008
                 .ConnectionString(con => con.FromConnectionStringWithKey("mapLive"))
                 .DefaultSchema("dbo"))
             .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Map.Data.admindepartmentsMap>()
-                .Conventions.Setup(con=>
+                .Conventions.Setup(con =>
                     {
                         con.Add(ForeignKey.EndsWith(""));
                         con.Add(DefaultLazy.Always());
-                    }    
+                    }
+
                 )
-            );                
+            );
 
             return c.BuildSessionFactory();
         }

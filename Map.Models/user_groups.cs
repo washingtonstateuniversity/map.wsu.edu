@@ -4,7 +4,6 @@ using System.Data.SqlTypes;
 using Newtonsoft.Json;
 
 namespace Map.Models {
-
     public class user_groups {
         virtual public int id { get; set; }
         [JsonIgnore]
@@ -33,5 +32,4 @@ namespace Map.Models {
         [JsonIgnore]
         virtual public IList<categories> categories { get; set; }
     }
-    
 }

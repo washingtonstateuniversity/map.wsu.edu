@@ -9,15 +9,13 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-
-    public class fields 
+    public class fields
     {
 		[JsonIgnore]
-        virtual public int id { get; set; } 
+        virtual public int id { get; set; }
 		virtual public field_types type { get; set; }
         virtual public string value { get; set; }
 		[JsonIgnore]
 		virtual public int owner { get; set; }
     }
 }
-
