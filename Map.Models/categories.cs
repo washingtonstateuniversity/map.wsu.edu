@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-
     public class categories
     {
         virtual public int id { get; set; }
@@ -20,5 +19,4 @@ namespace Map.Models
 		[JsonIgnore]
 		virtual public IList<categories> Children { get; set; }
 	}
-    
 }

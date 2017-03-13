@@ -5,7 +5,7 @@ using System.Web.Script.Serialization;
 
 namespace Map.Models
 {
-    public class styles 
+    public class styles
     {
         virtual public int id { get; set; }
         virtual public string name { get; set; }
@@ -17,11 +17,10 @@ namespace Map.Models
 
         virtual public String getoptionValue(String mouseevent, String option)
         {
-
             var values = new Dictionary<string, object>();
             if (!String.IsNullOrWhiteSpace(this.style_obj) && this.style_obj != "{}")
             {
-                var jss = new  JavaScriptSerializer();
+                var jss = new JavaScriptSerializer();
                 var options = jss.Deserialize<Dictionary<string, dynamic>>(this.style_obj);
                 options.ToList<KeyValuePair<string, dynamic>>();
                 foreach (KeyValuePair<string, dynamic> op in options)
@@ -38,8 +37,6 @@ namespace Map.Models
                     if (value.TryGetValue(option, out value))
                         option_str = value.ToString();
             return option_str;
-        }        
+        }
     }
-       
 }
-

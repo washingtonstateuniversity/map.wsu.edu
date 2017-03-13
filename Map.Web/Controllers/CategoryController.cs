@@ -20,7 +20,7 @@ namespace Map.Controllers
         public IEnumerable<categories> Get()
         {
             IRepository<categories> repo = new Repository<categories>();
-            return repo.GetAll<categories>(); 
+            return repo.GetAll<categories>();
         }
 
         // GET api/v1/categories/5
@@ -44,12 +44,13 @@ namespace Map.Controllers
 		public IEnumerable<place> GetCategoryPlaces(String ids)
 		{
 			List<place> placesToReturn = new List<place>();
-			if(!String.IsNullOrEmpty(ids))
-			{ 
+
+			if (!String.IsNullOrEmpty(ids))
+			{
 				foreach (String id in ids.Split(','))
 				{
 					var intId = Convert.ToInt32(id);
-					placesToReturn.AddRange(categoryService.GetCategoryPlaces(intId));
+					placesToReturn.AddRange(this.categoryService.GetCategoryPlaces(intId));
 				}
 			}
 

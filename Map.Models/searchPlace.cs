@@ -8,9 +8,9 @@ namespace Map.Models
 {
     public class searchPlace
     {
-        String _label, _labelvalue;
-        int _place_id;
-        String _related;
+        private String _label, _labelvalue;
+        private int _place_id;
+        private String _related;
 
         public searchPlace(String _label, string _value, int _place_id)
         {

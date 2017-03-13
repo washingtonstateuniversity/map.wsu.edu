@@ -11,7 +11,7 @@ namespace Map.Data
         {
             Id(x => x.id, "style_option_id");
             HasOne(x => x.type);
-            References(x => x.user_event,"event");
+            References(x => x.user_event, "event");
             References(x => x.zoom, "zoom");
             Map(x => x.value);
         }

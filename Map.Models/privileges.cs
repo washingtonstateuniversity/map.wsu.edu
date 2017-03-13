@@ -4,7 +4,6 @@ using System.Data.SqlTypes;
 using Newtonsoft.Json;
 
 namespace Map.Models {
-
     public class privileges {
         virtual public int id { get; set; }
         virtual public String name { get; set; }
@@ -13,5 +12,4 @@ namespace Map.Models {
         virtual public String description { get; set; }
         virtual public IList<user_groups> access_levels { get; set; }
     }
-
 }

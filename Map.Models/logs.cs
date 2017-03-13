@@ -2,7 +2,7 @@ using System;
 using System.Data.SqlTypes;
 
 namespace Map.Models {
-    public class logs  {
+    public class logs {
         virtual public int id { get; set; }
         virtual public string entry { get; set; }
         virtual public string code { get; set; }

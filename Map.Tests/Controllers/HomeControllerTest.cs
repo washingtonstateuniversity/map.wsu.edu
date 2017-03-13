@@ -2,6 +2,7 @@
 using Map;
 using Map.Controllers;
 using NUnit.Framework;
+using Map.Tests.Services;
 
 namespace Map.Tests.Controllers
 {
@@ -11,15 +12,18 @@ namespace Map.Tests.Controllers
         [Test]
         public void HomeIndexPage()
         {
-            // Arrange
-            HomeController controller = new HomeController();
+			SmallUrlTestService smallUrlService = new SmallUrlTestService();
+			CampusTestService campusService = new CampusTestService();
+
+			// Arrange
+			HomeController controller = new HomeController(smallUrlService, campusService);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(new string[] { }, "") as ViewResult;
 
-            // Assert 
+            // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Assert.AreEqual("Pullman", result.ViewBag.city);
         }
     }
 }

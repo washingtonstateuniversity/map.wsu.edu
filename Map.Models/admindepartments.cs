@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+
 namespace Map.Models
 {
-    
-    public class admindepartments 
+    public class admindepartments
     {
         virtual public int id { get; set; }
         virtual public string name { get; set; }
@@ -11,6 +11,5 @@ namespace Map.Models
         virtual public string attr { get; set; }
         [JsonIgnore]
         virtual public IList<place> Places { get; set; }
-    }    
-
+    }
 }

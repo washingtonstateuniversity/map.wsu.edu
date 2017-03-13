@@ -15,16 +15,17 @@ namespace Map.Controllers
     public class PlaceController : ApiController
     {
 		private IPlaceService placeService;
+
 		public PlaceController(IPlaceService _placeservice)
 		{
-			placeService = _placeservice;
+			this.placeService = _placeservice;
 		}
-		
+
         // GET api/v1/place
         [CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
         public IEnumerable<place> Get()
         {
-            return placeService.GetAll(); 
+            return this.placeService.GetAll();
         }
 
         // GET api/v1/place/search?query=xyz
@@ -33,7 +34,7 @@ namespace Map.Controllers
         [HttpGet]
         public IEnumerable<searchPlace> Search(String query)
         {
-            return placeService.Search(query);
+            return this.placeService.Search(query);
         }
 
         // GET api/v1/place/5
@@ -41,7 +42,7 @@ namespace Map.Controllers
         public place Get(int id)
         {
 			var place = placeService.Get(id);
-            return placeService.Get(id);
+            return this.placeService.Get(id);
         }
 
 		/*

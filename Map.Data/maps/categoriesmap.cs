@@ -19,6 +19,7 @@ namespace Map.Data
                 .Inverse()
                 .NotFound
                 .Ignore();
+			Map(x => x.friendly_name);
             Map(x => x.position);
             Map(x => x.url);
 			HasMany(x => x.Children).KeyColumn("parent");

@@ -17,7 +17,6 @@ namespace Map.Data
                 .ParentKeyColumn("geometric_event_id")
                 .ChildKeyColumn("style_option_id")
                 .NotFound.Ignore();
-
         }
     }
 }

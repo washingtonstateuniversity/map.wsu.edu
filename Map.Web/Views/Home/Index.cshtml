@@ -1,5 +1,5 @@
 ﻿<div id="jacket">
-    <div id="binder" class=" fluid max-1980"> 
+    <div id="binder" class="fluid max-1980"> 
         <!-- GRID BEHAVIOR: Default behavior can be changed by changing "hybrid" to "fixed" or "fluid". -->
         <!-- CONTENT -->
         <main>
@@ -17,8 +17,9 @@
                 <div id="selectedPlaceList" class="active heightminusbar ng-cloak" ng-show="markers.length > 0">
                     <a href="#" id="selectedPlaceList_btn" hidefocus="true" ng-click="toggleListings()" ng-class="{active: listingsopen}" class="closeListings">Info</a>
                     <div id="selectedPlaceList_area">
-                        <ul id="option"><li class="active" id="locations" ng-click="showDirections=false">Locations</li><li ng-click="showDirections=true">Directions</li></ul>
-                        <div id="listing" class="heightminusbar" tabindex="0" iscroll="{refreshInterval: 500}">
+                        <ul id="option"><li id="locations" ng-class="{active:!showDirections}" ng-click="showDirections=false">Locations</li><li ng-class="{active:showDirections}" ng-click="showDirections=true">Directions</li></ul>
+						<div id="directions-panel" ng-show="directions">{{directions}}</div>
+						<div id="listing" class="heightminusbar" tabindex="0" iscroll="{refreshInterval: 500}">
                             <ul id="mainnav" ng-show="!showDirections">
                                 <li ng-repeat="place in markers">
                                     <a ng-click="showWindow(place)" ng-class="{active:map.window.model == place}"><span class="place_order">{{$index+1}}</span>{{place.prime_name}} <span ng-show="place.abbrev_name">({{place.abbrev_name}})</span></a>
@@ -44,6 +45,15 @@
                                         templateUrl="'/Content/windowContent.html'"
                                         templateParameter="map.window">
                         </ui-gmap-window>
+						<ui-gmap-polyline path='{expression}'
+										  stroke='{expression}'
+										  clickable='{expression}'
+										  draggable='{expression}'
+										  editable='{expression}'
+										  geodesic='{expression}'
+										  icons='{expression}'
+										  fit='true'>
+						</ui-gmap-polyline>
                         <ui-gmap-polygons models="map.polys" path="'path'" stroke="'stroke'" fill="'fill'" visible="true" geodesic="true" fit="false">
                         </ui-gmap-polygons>
                     </ui-gmap-google-map>
@@ -103,10 +113,10 @@
                     </nav>
                     <nav id="wsu-global-links" class="spine-global-links">
                         <ul>
-                            <li class="zzusis-link"><a href="https://my.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">myWSU</a></li>
-                            <li class="access-link"><a href="https://oeo.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">Access</a></li>
-                            <li class="policies-link"><a href="https://policies.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">Policies</a></li>
-                            <li class="copyright-link"><a href="https://ucomm.wsu.edu/wsu-copyright-policy/" target="_blank" hidefocus="true" style="outline: none;" class="tracked" role="click_click_internal">©</a></li>
+                            <li class="zzusis-link"><a href="https://my.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked">myWSU</a></li>
+                            <li class="access-link"><a href="https://oeo.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked">Access</a></li>
+                            <li class="policies-link"><a href="https://policies.wsu.edu/" target="_blank" hidefocus="true" style="outline: none;" class="tracked">Policies</a></li>
+                            <li class="copyright-link"><a href="https://ucomm.wsu.edu/wsu-copyright-policy/" target="_blank" hidefocus="true" style="outline: none;" class="tracked">©</a></li>
                         </ul>
                     </nav>
                 </footer>
@@ -126,23 +136,23 @@
 </div>
 <script type="text/javascript">
 			var map_view = {
-				inview : false,
-				siteroot : 'http://localhost:56180/',
-				debug : true,
-				view_id : "centralmap",
-				view : 'public/',
-				error_reporting : true,
-				activePlace : 0,
-				campus : 'Pullman',
-				url : '/',
-				campus_latlng_str : '46.73090,-117.16101',
-				fit_to_bound : 'Washington State University Pullman, Washington USA'
+				inview: false,
+				siteroot: '@ViewBag.siteroot',
+				debug: true,
+				error_reporting: true,
+				startingUrl : '@ViewBag.smallurl',
+				activePlace: '@ViewBag.placeid',
+				campus: '@ViewBag.city',
+				categories: '@ViewBag.categories',
+				url: '/',
+				campus_latlng_str: '@ViewBag.latitude,@ViewBag.longitude'
 			};
+	
 </script>
 <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ng-cloak" ng-show="searchplaces.length > 0" tabindex="0" style="top: 178px;left: 28px;width: 191px;z-index:99999999" click-outside="clearAutocomplete()" outside-if-not="searchterm">
-    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':false}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>
+    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':false}" ng-click="loadOnePlace(place.place_id)"><a>{{place.label}}</a></li>
     <li class="related ui-menu-item" id="ui-id-9" tabindex="-1"><em>Related search items</em></li>
-    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':true}" ng-click="loadOnePlace(place)"><a>{{place.label}}</a></li>
+    <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':true}" ng-click="loadOnePlace(place.place_id)"><a>{{place.label}}</a></li>
 </ul>
 <ng-include src="'/Content/embed.html'"></ng-include>
 <ng-include src="'/Content/printable.html'"></ng-include>

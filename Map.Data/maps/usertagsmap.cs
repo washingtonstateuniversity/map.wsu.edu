@@ -12,13 +12,12 @@ namespace Map.Data
             Id(x => x.id, "usertag_id");
             Map(x => x.name);
             Map(x => x.attr);
-            
+
             HasManyToMany(x => x.Places)
                .Table("place_to_usertags")
                .ParentKeyColumn("usertag_id")
                .ChildKeyColumn("place_id")
                .NotFound.Ignore();
-
         }
     }
 }

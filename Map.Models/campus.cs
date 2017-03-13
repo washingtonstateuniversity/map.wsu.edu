@@ -3,10 +3,19 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-
-    public class campus 
+    public class campus
     {
-        virtual public int id { get; set; }
+		public campus()
+		{
+		}
+
+		public campus(int _id, string _city)
+		{
+			this.id = _id;
+			this.city = _city;
+		}
+
+		virtual public int id { get; set; }
         virtual public bool gameDayTourOn { get; set; }
         virtual public string city { get; set; }
         virtual public string name { get; set; }
@@ -19,5 +28,4 @@ namespace Map.Models
         [JsonIgnore]
         virtual public IList<place> Places { get; set; }
     }
-
 }

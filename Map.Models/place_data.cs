@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Map.Models {
-
     public class place_data
     {
         virtual public int Id { get; set; }
@@ -11,6 +10,4 @@ namespace Map.Models {
         virtual public String Key { get; set; }
         virtual public String Data { get; set; }
     }
-
 }
-

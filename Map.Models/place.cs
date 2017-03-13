@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-
     public class place : publish_base
     {
 		public place() { }
@@ -21,6 +20,7 @@ namespace Map.Models
         {
             return !string.IsNullOrEmpty(infoTitle) ? infoTitle.Trim() : prime_name.Trim();
         }
+
         virtual public int id { get; set; }
         virtual public string infoTitle { get; set; }
         virtual public string prime_name { get; set; }
@@ -60,25 +60,28 @@ namespace Map.Models
         virtual public IList<media_repo> Images { get; set; }
         virtual public IList<comments> comments { get; set; }
         virtual public IList<comments> comments_pub { get; set; }
-        virtual public IList<infotabs> infotabs { get; set; }
+		[JsonIgnore]
+		virtual public IList<infotabs> infotabs { get; set; }
         [JsonIgnore]
         virtual public IList<users> authors { get; set; }
         virtual public IList<place_data> Placedata { get; set; }
         [JsonProperty("shapes")]
         virtual public IList<geometrics> geometrics { get; set; }
         virtual public float latitude
-        { 
-            get{
+        {
+            get {
                 if (coordinate != null)
                 {
                     return getLat();
                 }
                 else return 0;
             }
+
             set
             {
             }
         }
+
         virtual public float longitude
         {
             get
@@ -89,10 +92,12 @@ namespace Map.Models
                 }
                 else return 0;
             }
+
             set
             {
             }
         }
+
         public static SqlGeography AsGeography(byte[] bytes)
         {
             SqlGeography geo = new SqlGeography();
@@ -106,6 +111,7 @@ namespace Map.Models
 
             return geo;
         }
+
         virtual public float getLat()
         {
             SqlGeography spatial = place.AsGeography(this.coordinate);
@@ -121,8 +127,5 @@ namespace Map.Models
             float.TryParse(spatial.Long.ToString(), out lng);
             return lng;
         }
-
     }
-
 }
-

@@ -23,6 +23,7 @@ namespace Map.Models {
                 }
             }
         }
+
         private DateTime? Updated_Date;
         virtual public DateTime? updated_date
         {
@@ -36,6 +37,7 @@ namespace Map.Models {
                 }
             }
         }
+
         private DateTime? Publish_Time;
         virtual public DateTime? publish_time {
             get { return Publish_Time; }

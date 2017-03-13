@@ -1,52 +1,68 @@
 ﻿#campusmap {
 	#selectedPlaceList_area {
+
 		ul {
 			padding-bottom: 75px;
+
 			li {
 				a {
 					cursor: pointer;
 				}
 			}
+
 		}
 	}
+
 	#listing {
 		overflow: hidden;
 		user-select: none;
 	}
+
 	#selectedPlaceList {
 		width: 235px;
 	}
+
 	#spine {
 		#glue {
 			#spine-navigation {
 				height: auto;
+
 				#main_nav {
-					li.active {
+
+					.active {
+
 						li {
 							a {
 								padding-bottom: 0;
 							}
 						}
+
 						ul {
 							margin-top: 3px;
 						}
 					}
+
 					li {
 						a {
 							height: auto;
 						}
 					}
 				}
+
 				.spine-sitenav {
 					padding-bottom: 50px;
 				}
-				form#getDirections {
+
+				#getDirections {
+
 					ul {
+
 						#directionsFrom {
 							&:before {
 								top: auto;
 							}
 						}
+
 						#directionsTo {
 							&:before {
 								top: auto;
@@ -57,10 +73,12 @@
 			}
 		}
 	}
+
 	footer {
 		background-color: #fff;
 	}
 }
+
 #main_nav {
 	.parentarea {
 		ul {
@@ -72,181 +90,87 @@
 		}
 	}
 }
+
 #spine-navigation {
 	overflow: hidden;
 	user-select: none;
 }
+
 #glue {
 	height: 100%;
 }
+
 .moveformenu {
 	margin-left: 235px;
 }
-.ui-widget {
-	input {
-	}
-	select {
-	}
-	textarea {
-	}
-	button {
-	}
-}
+
 form {
+
 	label {
-		display:block;
-		margin-top:5px;
+		display: block;
+		margin-top: 5px;
 	}
 }
 
 @-webkit-keyframes rotate {
 
- 
-  from {
-    -webkit-transform: rotate(0deg); 
-  }
-  to { 
-    -webkit-transform: rotate(359deg);
-  }
-  
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+	    transform: rotate(359deg);
+	}
 }
 
 .ui-widget-overlay {
 	background: #000;
 	opacity: 0.3;
 }
+
 .loaderWrapper {
 	.loader {
-		-webkit-animation-timing-function: linear;
-		-webkit-animation-duration: 2s;
-		-webkit-animation-iteration-count: infinite; 
-		-webkit-animation-name: rotate;
-		background: transparent url(/Content/images/ico-loader-drk.png); 
+		animation-timing-function: linear;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-name: rotate;
+		background: transparent url(/Content/images/ico-loader-drk.png);
 		background-size: 100% 100%;
 		height: 20px;
 		position: absolute;
-		right: calc( 50% - 10px );
-		top: calc( 50% - 10px );
+		right: calc(50% - 10px);
+		top: calc(50% - 10px);
 		width: 20px;
-		z-index:9999;
+		z-index: 9999;
 	}
 }
+
 .ng-hide-add {
-	animation:0.5s fadeOut ease;
-} 
+	animation: 0.5s fadeOut ease;
+}
+
 .ng-hide-remove {
-	animation:0.5s fadeIn ease;
+	animation: 0.5s fadeIn ease;
 	transform: none;
 }
+
 .ui-dialog {
-	-webkit-transform: translateY(80%) scale(.8);
 	transform: translateY(80%) scale(.8);
-	transition: .5s;
+	transition: 0.5s;
 }
+
 .open {
+
 	.ui-dialog {
-		transform:none;
+		transform: none;
 	}
 }
 
-/* flip in */
-@-webkit-keyframes flipInX {
-    0% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-    -webkit-transition-timing-function: ease-in;
-    transition-timing-function: ease-in;
-    opacity: 0;
-    }
-
-    40% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-    -webkit-transition-timing-function: ease-in;
-    transition-timing-function: ease-in;
-    }
-
-    60% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-    opacity: 1;
-    }
-
-    80% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    }
-
-    100% {
-    -webkit-transform: perspective(400px);
-    transform: perspective(400px);
-    }
-}
-
-@keyframes flipInX {
-    0% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-    -ms-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
-    -webkit-transition-timing-function: ease-in;
-    transition-timing-function: ease-in;
-    opacity: 0;
-    }
-
-    40% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-    -ms-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
-    -webkit-transition-timing-function: ease-in;
-    transition-timing-function: ease-in;
-    }
-
-    60% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-    -ms-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
-    opacity: 1;
-    }
-
-    80% {
-    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    -ms-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
-    }
-
-    100% {
-    -webkit-transform: perspective(400px);
-    -ms-transform: perspective(400px);
-    transform: perspective(400px);
-    }
-}
-
-/* light speed out */
-@-webkit-keyframes lightSpeedOut {
-    0% {
-    opacity: 1;
-    }
-
-    100% {
-    -webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
-    transform: translate3d(100%, 0, 0) skewX(30deg);
-    opacity: 0;
-    }
-}
-
-@keyframes lightSpeedOut {
-    0% {
-    opacity: 1;
-    }
-
-    100% {
-    -webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
-    -ms-transform: translate3d(100%, 0, 0) skewX(30deg);
-    transform: translate3d(100%, 0, 0) skewX(30deg);
-    opacity: 0;
-    }
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
   display: none !important;
 }

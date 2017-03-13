@@ -4,8 +4,7 @@ using System.Data.SqlTypes;
 using Newtonsoft.Json;
 
 namespace Map.Models {
-
-    public class users  {
+    public class users {
         virtual public int id { get; set; }
         virtual public String nid { get; set; }
         virtual public user_groups groups { get; set; }
@@ -25,6 +24,7 @@ namespace Map.Models {
                 }
             }
         }
+
         [JsonIgnore]
         virtual public IList<media_repo> media { get; set; }
         [JsonIgnore]
@@ -48,5 +48,4 @@ namespace Map.Models {
         /*[JsonIgnore]
         virtual public IList<place> editing { get; set; } */
     }
-  
 }

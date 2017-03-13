@@ -12,14 +12,12 @@ namespace Map.Data
             Id(x => x.id, "zoom_id");
             Map(x => x.start, "zoom_start");
             Map(x => x.end, "zoom_end");
-            
             HasManyToMany(x => x.events)
                .Table("geometric_events_to_zoom")
                .ParentKeyColumn("zoom_id")
                .ChildKeyColumn("geometric_event_id")
                .Inverse()
                .NotFound.Ignore();
-
         }
     }
 }

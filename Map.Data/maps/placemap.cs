@@ -96,7 +96,7 @@ namespace Map.Data
                 .KeyColumn("place_id")
                 .Cascade.AllDeleteOrphan()
                 .Inverse();
-            HasMany(x=>x.comments_pub)
+            HasMany(x => x.comments_pub)
                 .Table("place_to_comments")
                 .KeyColumn("place_id")
                 .Where("published=1")
@@ -118,7 +118,6 @@ namespace Map.Data
                 .ParentKeyColumn("place_id")
                 .ChildKeyColumn("geometric_id")
                 .NotFound.Ignore();
-
 
             // Publish base
             Map(x => x.creation_date);
