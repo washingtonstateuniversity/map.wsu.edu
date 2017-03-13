@@ -29,7 +29,7 @@ namespace Map.Data
                 return CreateObjectContract(objectType);
             }
 
-            return CreateContract(objectType);
+            return base.CreateContract(objectType);
         }
     }
 }

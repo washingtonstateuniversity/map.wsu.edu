@@ -1,9 +1,11 @@
 using System;
+using Newtonsoft.Json;
 
 namespace Map.Models
 {
     public class small_url
     {
+		[JsonConstructor]
 		public small_url()
 		{
 		}

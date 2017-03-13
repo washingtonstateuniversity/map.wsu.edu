@@ -5,6 +5,7 @@ namespace Map.Models
 {
     public class campus
     {
+		[JsonConstructor]
 		public campus()
 		{
 		}
