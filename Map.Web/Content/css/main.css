@@ -38,11 +38,11 @@
 	padding-bottom: 50px;
 }
 
-#campusmap #spine #glue #spine-navigation #getDirections ul #directionsFrom:before {
+#campusmap #spine #glue #spine-navigation form#getDirections ul #directionsFrom:before {
 	top: auto;
 }
 
-#campusmap #spine #glue #spine-navigation #getDirections ul #directionsTo:before {
+#campusmap #spine #glue #spine-navigation form#getDirections ul #directionsTo:before {
 	top: auto;
 }
 

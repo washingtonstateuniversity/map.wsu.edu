@@ -24,7 +24,7 @@
   "qualifyingElement"      : { "enabled": true,
                                "allowWithAttribute": true,
                                "allowWithClass": false,
-                               "allowWithId": false },
+                               "allowWithId": true },
   "singleLinePerProperty"  : { "enabled": true },
   "singleLinePerSelector"  : { "enabled": true },
   "spaceAfterPropertyColon": { "enabled": true, "style": "one_space" },
