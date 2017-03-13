@@ -19,10 +19,10 @@ namespace Map
                 defaults: new { id = RouteParameter.Optional }
             );
 
+			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Map.Data.IgnoreSerializableJsonContractResolver();
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Map.Data.IgnoreSerializableJsonContractResolver();
 
-            var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+			var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
         }
     }
