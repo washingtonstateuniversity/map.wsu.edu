@@ -21,9 +21,10 @@ namespace Map
 
 			config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Map.Data.IgnoreSerializableJsonContractResolver();
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+			//config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
 
-			var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
-        }
+			var formatters = GlobalConfiguration.Configuration.Formatters;
+			formatters.Remove(formatters.XmlFormatter);
+		}
     }
 }

@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Map.Areas.HelpPage.ModelDescriptions;
 using Map.Areas.HelpPage.Models;
+using Microsoft.Practices.Unity;
 
 namespace Map.Areas.HelpPage.Controllers
 {
@@ -13,7 +14,8 @@ namespace Map.Areas.HelpPage.Controllers
     {
         private const string ErrorViewName = "Error";
 
-        public HelpController()
+		[InjectionConstructor]
+		public HelpController()
             : this(GlobalConfiguration.Configuration)
         {
         }
