@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 
 namespace Map.Models
 {
-    public class place : publish_base
-    {
+    public class place : publish_base, IEquatable<place>
+	{
 		public place() { }
 		public place(int _id, string _name)
 		{
@@ -127,5 +127,18 @@ namespace Map.Models
             float.TryParse(spatial.Long.ToString(), out lng);
             return lng;
         }
-    }
+
+		virtual public bool Equals(place other)
+		{
+			if (id == other.id && prime_name == other.prime_name)
+				return true;
+
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return (id + prime_name).GetHashCode();
+		}
+	}
 }

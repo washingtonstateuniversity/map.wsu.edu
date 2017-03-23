@@ -18,6 +18,9 @@ WSUApp.factory('myCache', function($cacheFactory) {
 		getPlaceObjByCategories: function(ids) {
 			var deferred = $q.defer();
 			var url = '/api/v1/category/places?ids=' + ids;
+			if (ids === null) {
+				deferred.resolve([]);
+			}
 			$http.get(url).then(function (response)
 				{
 					deferred.resolve(response.data);
@@ -54,7 +57,18 @@ WSUApp.factory('myCache', function($cacheFactory) {
                     deferred.reject(response.data);
                 });
 			return deferred.promise;
-        },
+		},
+		getSmallUrl: function (url) {
+			var deferred = $q.defer();
+			$http.get("/api/v1/url/?url=" + encodeURIComponent(url))
+			.then(function (response) {
+				deferred.resolve(response.data);
+				},
+				function (response) {
+					deferred.reject(response.data);
+			});
+			return deferred.promise;
+		},
 		reportError: function(data) {
 			console.info("reportError", data);
 			var deferred = $q.defer();

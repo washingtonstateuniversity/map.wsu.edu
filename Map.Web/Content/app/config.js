@@ -1,6 +1,11 @@
 WSUApp.config(
-	function($stateProvider, $httpProvider, localStorageServiceProvider, $urlRouterProvider)
+	function(localStorageServiceProvider, $locationProvider)
 	{
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false,
+			rewriteLinks: false
+		});
 		localStorageServiceProvider.setPrefix('WSUApp');
 	}
 );

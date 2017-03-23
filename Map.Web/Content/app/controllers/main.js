@@ -1,7 +1,8 @@
 (function () {
 	'use strict';
 
-	WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope, $state, $timeout, localStorageService, mapService, uiGmapIsReady, iScrollService) {
+	WSUApp.controller('MainCtrl', function ($scope, $q, $http, $location, $rootScope, $timeout, $interval, $window, localStorageService, mapService, uiGmapIsReady, iScrollService) {
+		// for iscroll
 		var vm = this;  // Use 'controller as' syntax
 		vm.iScrollState = iScrollService.state;
 
@@ -13,12 +14,19 @@
 		$scope.showDirections = false;
 		$scope.ismobile = jQuery(window).width() < 990;
 
+		$scope.$watch(function() {
+			return $location.path();
+		}, function(){
+			$scope.currentUrl = window.location.href;
+		});
+
 		// unclick any open menu items
 		$scope.clearTheMenu = function () {
 			for (var i = 0; i < $scope.categories.length; i++) {
 				$scope.categories[i].active = false;
 			}
 		};
+
 		// recenter map on pullman
 		$scope.recenterMap = function () {
 			$scope.map.center.latitude = center_lat;
@@ -29,49 +37,66 @@
 		// get category by name
 		$scope.getCategoryByName = function (searchname) {
 			for (var i = 0; i < $scope.categories.length; i++) {
-				if ($scope.categories[i].name === searchname || $scope.categories[i].friendly_name === searchname) {
+				if ($scope.categories[i].name === searchname || $scope.categories[i].friendly_name === searchname || $scope.categories[i].id === parseInt(searchname)) {
 					return $scope.categories[i];
 				}
 			}
 		};
+		$scope.setMenuActive = function (category) {
+			for (var i = 0; i < $scope.categories.length; i++) {
+				if ($scope.categories[i].id === category.id) {
+					$scope.categories[i].active = true;
+				}
+			}
+		};
+		$scope.getActiveMenuLinks = function () {
+			var activeids = null;
+			for (var i = 0; i < $scope.categories.length; i++) {
+				if ($scope.categories[i].active) {
+					if (activeids) {
+						activeids += "," + $scope.categories[i].id;
+					}
+					else {
+						activeids = $scope.categories[i].id;
+					}
+				}
+			}
+			console.debug("getActiveMenuLinks", activeids);
+			return activeids;
+		};
+		$scope.clickedMenuItem = function (clickedCategory) {
+			$scope.toggleActiveMenuItem(clickedCategory);
+			$scope.setShortUrl();
+		};
 		// They clicked a menu item
 		$scope.toggleActiveMenuItem = function (clickedCategory) {
 			var deferred = $q.defer();
-			$scope.map.polys = [];
-			$scope.map.window.show = false;
-			// if this was called with a null category
-			if (!clickedCategory)
-			{
-				return;
-			}
-			var searchids = "";
-			if (clickedCategory.Parent === null) {
-				$scope.clearTheMenu();
-				clickedCategory.active = !clickedCategory.active;
-				if (clickedCategory.active) {
-					searchids = clickedCategory.id;
-				}
-			}
-			else {
-				clickedCategory.active = !clickedCategory.active;
-				var activeCount = 0;
-				for (var i = 0; i < $scope.categories.length; i++) {
-					if ($scope.categories[i].active && $scope.categories[i].Parent !== null) {
-						activeCount++;
-						if (searchids) {
-							searchids += "," + $scope.categories[i].id;
-						}
-						else {
-							searchids = $scope.categories[i].id;
-						}
-					}
-				}
-				// If they've unclicked all sub categories
-				if (activeCount === 0) {
+			$scope.clearShapes();
+			$scope.closeWindow();
+
+			if (clickedCategory) {
+				if (clickedCategory.Parent === null) {
 					$scope.clearTheMenu();
+					clickedCategory.active = !clickedCategory.active;
+				}
+				else {
+					// If we need to set the parent to active in the menu
+					if (clickedCategory.Parent !== null) {
+						$scope.setMenuActive(clickedCategory.Parent);
+					}
+					// Toggle the clicked category in the menu
+					clickedCategory.active = !clickedCategory.active;
 				}
 			}
-			mapService.getPlaceObjByCategories(searchids).then(
+
+			var activeids = $scope.getActiveMenuLinks();
+
+			// If they've unclicked all sub categories
+			if (!activeids) {
+				$scope.clearTheMenu();
+			}
+
+			mapService.getPlaceObjByCategories(activeids).then(
 				function (markers) {
 					$scope.markers = markers;
 					for (var i = 0; i < $scope.markers.length; i++) {
@@ -85,6 +110,45 @@
 			);
 			return deferred.promise;
 		};
+
+		// Get the equivalent url params like ?cat[]=2,3,4&pid=1 where pid is the clicked place and cat[] is the categories open
+		$scope.getURLParams = function (categories, pid) {
+			var newurl = "?cat[]=" + categories;
+			if (pid)
+			{
+				newurl += "&pid=" + pid;
+			}
+			return newurl;
+		};
+
+		// Get short url from Database like /t/350E1FC4 and set it in the URL
+		$scope.setShortUrl = function () {
+			var activeids = $scope.getActiveMenuLinks();
+			var placeid = null;
+			if ($scope.map.window.model) {
+				placeid = $scope.map.window.model.id;
+			}
+			var newurl = $scope.getURLParams(activeids, placeid);
+			if (placeid === null && activeids === null) {
+				$window.history.pushState({ cat: activeids, pid: placeid }, null, "/");
+			}
+			else {
+				return mapService.getSmallUrl(newurl).then(function (data) {
+					$window.history.pushState({ cat: activeids, pid: placeid }, newurl, "/t/" + data.sm_url);
+				});
+			}
+		};
+
+		// Update the page content when the popstate event is called, i.e. back button pushed
+		$window.addEventListener('popstate', function (event) {
+			if (event && event.state) {
+				var newcategories = event.state.cat;
+				var placeid = event.state.pid;
+				setupSavedCategoriesAndPlaceMap(newcategories.toString(), placeid);
+			}
+		});
+
+		// We get a marker from JSON, but we need to arrange it to use it on the google map
 		$scope.prepMarker = function (marker, i) {
 			var width = parseInt(30);
 			var height = parseInt(50);
@@ -104,6 +168,8 @@
 				optimized: false
 			};
 		};
+
+		// Given a place id, load it
 		$scope.loadOnePlace = function (id) {
 			mapService.getPlaceById(id).then(function (marker) {
 				$scope.prepMarker(marker, 1);
@@ -153,27 +219,32 @@
 				$scope.openListings();
 			}
 		};
+
 		// Handle clicking of either the icon on the map or the listing in the listing panel
 		$scope.showWindow = function (selectedPlace) {
 			console.debug("selectedPlace", selectedPlace);
 			$scope.map.window.model = selectedPlace;
+			$scope.setShortUrl();
 			$scope.map.window.show = true;
-			$scope.centerOnWindow();
+			$scope.centerOnPopupWindow();
 			$scope.mapinstance.setOptions({ scrollwheel: false });
 
 			$timeout(setupInfoWindow, 1200);
 			$scope.showShape(selectedPlace);
 		};
-		$scope.centerOnWindow = function () {
+
+		$scope.centerOnPopupWindow = function () {
 			var centerpoint = new google.maps.LatLng($scope.map.window.model.position.latitude, $scope.map.window.model.position.longitude);
 			$scope.mapinstance.setCenter(centerpoint);
 		};
+
 		$scope.showShapes = function () {
 			$scope.map.polys = [];
 			for (var i = 0; i < $scope.markers.length; i++) {
 				$scope.showShape($scope.markers[i]);
 			}
 		};
+
 		$scope.showShape = function (place) {
 			if (place.shapes.length > 0 && place.shapes[0].encoded) {
 				var decodedPath = google.maps.geometry.encoding.decodePath(place.shapes[0].encoded);
@@ -197,13 +268,13 @@
 				$scope.map.polys.push(place.shapes[0]);
 			}
 		};
+
 		// Some defaults
 		var center_lat = map_view.campus_latlng_str.split(',')[0];
 		var center_lng = map_view.campus_latlng_str.split(',')[1];
 		var spinewidth = 0;
 		var defaultzoom = 15;
 		$scope.listingsopen = false;
-
 
 		$scope.setMapDimensions = function (extrawidth) {
 			var markerlistingswidth = 0;
@@ -249,7 +320,7 @@
 		$scope.fitToBounds = function () {
 			if ($scope.markers.length > 0) {
 				if ($scope.map.window.model) {
-					$scope.centerOnWindow();
+					$scope.centerOnPopupWindow();
 				}
 				else {
 					var bounds = new google.maps.LatLngBounds();
@@ -355,16 +426,21 @@
 					return fieldname.indexOf('ADA') === -1;
 				},
 				getName: function () {
-					if ($scope.map.window.model.infoTitle) {
-						return $scope.map.window.model.infoTitle;
-					}
-					if ($scope.map.window.model.prime_name) {
-						return $scope.map.window.model.prime_name;
+					if ($scope.map.window.model) {
+						if ($scope.map.window.model.infoTitle) {
+							return $scope.map.window.model.infoTitle;
+						}
+						if ($scope.map.window.model.prime_name) {
+							return $scope.map.window.model.prime_name;
+						}
 					}
 					return "";
 				},
 				getImageLink: function (imageid) {
-					return "/api/v1/media/" + imageid + "?placeid=" + $scope.map.window.model.id;
+					if ($scope.map.window.model) {
+						return "/api/v1/media/" + imageid + "?placeid=" + $scope.map.window.model.id;
+					}
+					return "";
 				},
 				showDirectionsFrom: function (place) { $scope.showDirectionsFrom(place); },
 				showReportErrorPopup: $scope.showReportErrorPopup,
@@ -397,7 +473,7 @@
 				$scope.mapinstance = map;
 				$scope.directionService = new google.maps.DirectionsService();
 				$scope.directionsDisplay = new google.maps.DirectionsRenderer();
-				setupSavedCategoriesAndPlaceMap();
+				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace);
 			});
 		});
 
@@ -445,9 +521,24 @@
 		$scope.resetMap = function () {
 			$scope.closeListings();
 			$scope.markers = [];
+			$scope.closeWindow();
+			$scope.clearShapes();
 			$scope.clearTheMenu();
+			$scope.setShortUrl();
 			$scope.recenterMap();
 		};
+
+		// Clear any shapes drawn on the map, like building outlines or parking lot outlines
+		$scope.clearShapes = function () {
+			$scope.map.polys = [];
+		};
+
+		// Close the popup details window on the map
+		$scope.closeWindow = function () {
+			$scope.map.window.show = false;
+			$scope.map.window.model = null;
+		};
+
 		// iScroll is needed for the listings
 		$scope.resetAllScrollers = function (iscroll, timeout) {
 			if (!timeout) {
@@ -504,7 +595,7 @@
 					timeout: 0,
 					pager: jQuery(".cycleArea").find('.cNav'),
 					pagerAnchorBuilder: function (idx, slide) {
-						return '<li><a href="#" hidefocus="true">' + idx + '</a></li>';
+						return '<li><a  hidefocus="true">' + idx + '</a></li>';
 					},
 					prev: '.prev',
 					next: '.next',
@@ -526,29 +617,31 @@
 		}
 
 		// Called after google map is ready
-		// Open cateogry and clicked place from small url
-		function setupSavedCategoriesAndPlaceMap() {
+		// Open category and clicked place from small url
+		function setupSavedCategoriesAndPlaceMap(categoryids, placeid) {
 			// Menu setup -- We dynamically get the JSON feed to make the menu
 			mapService.getCategoryList().then(function (data) {
 				$scope.categories = data;
-				$scope.clearTheMenu();
-				if (map_view.categories) {
-					// Setup saved category
-					var clickedcat = $scope.getCategoryByName(map_view.categories);
-					if (clickedcat) {
-						$scope.toggleActiveMenuItem(clickedcat).then(function () {
-							// Setup saved place
-							if (map_view.activePlace !== null) {
-								for (var i = 0; i < $scope.markers.length; i++) {
-									console.log($scope.markers[i].id);
-									if ($scope.markers[i].id === map_view.activePlace) {
-										$scope.showWindow($scope.markers[i]);
-									}
-								}
-							}
-						});
+				//$scope.clearTheMenu();
+				// Setup saved place
+				console.info("categoryids", typeof(categoryids));
+				console.info("categoryids", categoryids);
+				if (categoryids) {
+					var loadcats = categoryids.split(',');
+					for (var j = 0; j < loadcats.length; j++) {
+						// Setup saved category
+						var clickedcat = $scope.getCategoryByName(loadcats[j]).active = true;
 					}
 				}
+				$scope.toggleActiveMenuItem().then(function () {
+					if (placeid !== null) {
+						for (var i = 0; i < $scope.markers.length; i++) {
+							if ($scope.markers[i].id === parseInt(placeid)) {
+								$scope.showWindow($scope.markers[i]);
+							}
+						}
+					}
+				});
 			});
 		}
 	});

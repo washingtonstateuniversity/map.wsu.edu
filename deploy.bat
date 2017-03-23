@@ -1,1 +1,0 @@
-"C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" -verb:sync -source:contentPath="C:\updesktop\natedev\Map\Map.Web\" -dest:contentPath='files-to-pub',ComputerName="http://localhost/msdeploy.axd"

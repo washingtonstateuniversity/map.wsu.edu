@@ -20,7 +20,7 @@ namespace Map.Controllers
         public IEnumerable<categories> Get()
         {
             IRepository<categories> repo = new Repository<categories>();
-            return repo.GetAll<categories>();
+			return repo.GetAll<categories>().OrderBy(c => c.name);
         }
 
         // GET api/v1/categories/5
