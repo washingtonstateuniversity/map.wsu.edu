@@ -1,0 +1,41 @@
+﻿#if($reporter)
+	<h3><span style="color:#860C0E;">Reported on $date</span></h3>
+	<h4>Hello $name,</h4>
+	<p>Thank you for taking the time to report an issue with WSU Maps. This email is to confirm that we have received your report and will be addressing it soon.</p>
+#else
+	<h3><span style="color:#860C0E;">Reported on $date</span></h3>
+	<h4>We have a new issue report from $name,</h4>
+	<p>$description</p>
+	<p>Lets take action: Push to <a href="#">github issues</a> or <a href="mailto:${email}?cc=web.support@wsu.edu&subject=Mapping%20issue%20report&body=%0A%0A%3C%3A%3A%20RESPONED%20ABOVE%20%3A%3A%3E%0A$report">respond back to them</a></p>
+#end
+
+<br />
+<h3>Report made:</h3>
+<hr />
+
+#if($place_name)
+	Place Name: ${place_name}
+	<hr />
+#end
+
+#if($place_id)
+	Place id: ${place_id}
+	<hr />
+#end
+
+<p> $description </p>
+<hr />
+Sender's email: $email
+<hr />
+Issue Type: $issueType
+<hr />
+Location: $reported_url
+
+#if(!$reporter)
+	<hr />
+	User Agent: $!ua
+	<hr />
+	Data: $!data
+	<hr />
+#end
+
