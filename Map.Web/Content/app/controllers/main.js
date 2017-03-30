@@ -301,7 +301,7 @@
 		$scope.setMapDimensions = function (extrawidth) {
 			var markerlistingswidth = 0;
 
-			if ($scope.listingsopen & $scope.markers.length > 0) {
+			if ($scope.listingsopen && $scope.markers.length > 0) {
 				markerlistingswidth = jQuery("#selectedPlaceList").width();
 			}
 
