@@ -6,6 +6,9 @@
 		var vm = this;  // Use 'controller as' syntax
 		vm.iScrollState = iScrollService.state;
 
+		// The official array of markers
+		$scope.markers = [];
+
 		$scope.useragent = navigator.userAgent;
 		$scope.currentUrl = window.location.href;
 		$scope.embedW = 495;
@@ -61,7 +64,24 @@
 					}
 				}
 			}
-			console.debug("getActiveMenuLinks", activeids);
+			return activeids;
+		};
+		$scope.getActiveMenuLinksNoParents = function () {
+			var activeids = null;
+			for (var i = 0; i < $scope.categories.length; i++) {
+				if ($scope.categories[i].active && $scope.categories[i].Parent !== null) {
+					if (activeids) {
+						activeids += "," + $scope.categories[i].id;
+					}
+					else {
+						activeids = $scope.categories[i].id;
+					}
+				}
+			}
+			if (activeids === null)
+			{
+				activeids = $scope.getActiveMenuLinks();
+			}
 			return activeids;
 		};
 		$scope.clickedMenuItem = function (clickedCategory) {
@@ -89,25 +109,27 @@
 				}
 			}
 
-			var activeids = $scope.getActiveMenuLinks();
+			// Get all menu links but parent categories would include everything
+			var activeids = $scope.getActiveMenuLinksNoParents();
 
 			// If they've unclicked all sub categories
 			if (!activeids) {
 				$scope.clearTheMenu();
 			}
-
-			mapService.getPlaceObjByCategories(activeids).then(
-				function (markers) {
-					$scope.markers = markers;
-					for (var i = 0; i < $scope.markers.length; i++) {
-						$scope.prepMarker($scope.markers[i], i + 1);
+			else {
+				mapService.getPlaceObjByCategories(activeids).then(
+					function (markers) {
+						$scope.markers = markers;
+						for (var i = 0; i < $scope.markers.length; i++) {
+							$scope.prepMarker($scope.markers[i], i + 1);
+						}
+						$scope.showShapes();
+						$scope.openListings();
+						$scope.resetAllScrollers($rootScope.myScroll, 250);
+						deferred.resolve();
 					}
-					$scope.showShapes();
-					$scope.openListings();
-					$scope.resetAllScrollers($rootScope.myScroll, 250);
-					deferred.resolve();
-				}
-			);
+				);
+			}
 			return deferred.promise;
 		};
 
@@ -279,7 +301,7 @@
 		$scope.setMapDimensions = function (extrawidth) {
 			var markerlistingswidth = 0;
 
-			if ($scope.listingsopen) {
+			if ($scope.listingsopen & $scope.markers.length > 0) {
 				markerlistingswidth = jQuery("#selectedPlaceList").width();
 			}
 
@@ -360,8 +382,6 @@
 			$scope.popupmessage = "Thank you your issue has been submitted";
 		};
 
-		// The official array of markers
-		$scope.markers = [];
 		// Map and map.window settings
 		$scope.map = {
 			control: {},
@@ -471,6 +491,16 @@
 			instances.forEach(function (inst) {
 				var map = inst.map;
 				$scope.mapinstance = map;
+				// Hack to make it redraw markers when marker list changes
+				google.maps.event.addListener(map, 'zoom_changed', function () {
+					setTimeout(function () {
+						var cnt = map.getCenter();
+						cnt.e += 0.000001;
+						map.panTo(cnt);
+						cnt.e -= 0.000001;
+						map.panTo(cnt);
+					}, 400);
+				});
 				$scope.directionService = new google.maps.DirectionsService();
 				$scope.directionsDisplay = new google.maps.DirectionsRenderer();
 				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace);
@@ -622,10 +652,7 @@
 			// Menu setup -- We dynamically get the JSON feed to make the menu
 			mapService.getCategoryList().then(function (data) {
 				$scope.categories = data;
-				//$scope.clearTheMenu();
 				// Setup saved place
-				console.info("categoryids", typeof(categoryids));
-				console.info("categoryids", categoryids);
 				if (categoryids) {
 					var loadcats = categoryids.split(',');
 					for (var j = 0; j < loadcats.length; j++) {

@@ -72,12 +72,16 @@ WSUApp.factory('myCache', function($cacheFactory) {
 		reportError: function(data) {
 			console.info("reportError", data);
 			var deferred = $q.defer();
-			$http.post("https://map.wsu.edu/public/reporterror.castle", data)
-			.success(function (data, status, headers, config) {
-				deferred.resolve(data);
+			$http({
+				method: 'GET',
+				url: "/api/v1/email/",
+				params: data
 			})
-			.error(function (data, status, header, config) {
-				deferred.reject(data);
+			.then(function (response) {
+				deferred.resolve(response.data);
+			},
+			function (response) {
+				deferred.reject(response.data);
 			});
 			return deferred.promise;
         }
