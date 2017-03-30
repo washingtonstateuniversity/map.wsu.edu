@@ -23,15 +23,16 @@ namespace Map.Controllers
 	{
         [HttpGet]
         [Route("api/v1/email/")]
-        public HttpResponseMessage Get(String email, String name = "", String reported_url = "", String place_name = "", int place_id = 0, String ua = "", String description = "", String issueType = "", String data = "")
+        public HttpResponseMessage Get(String email = "", String name = "", String reported_url = "", String place_name = "", int place_id = 0, String ua = "", String description = "", String issueType = "", String data = "")
 		{
 			var emailTemplatePath = HttpContext.Current.Server.MapPath(@"~/Views/Mail/place_errors.vm");
 			var emailTemplate = System.IO.File.ReadAllText(emailTemplatePath);
-			Velocity.Init();
+
 			VelocityEngine velocity = new VelocityEngine();
 			velocity.Init();
 
 			VelocityContext context = new VelocityContext();
+			context.Put("name", name);
 			context.Put("email", email);
 			context.Put("date", DateTime.Now);
 			context.Put("reported_url", reported_url);
@@ -50,7 +51,7 @@ namespace Map.Controllers
 
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.From = new MailAddress("noreply@wsu.edu");
-			mailMessage.To.Add(email);
+			mailMessage.To.Add("nathan_owen@wsu.edu");
 			mailMessage.Subject = "Reported Map error: " + issueType;
 			mailMessage.Body = resultHtml;
 			mailMessage.IsBodyHtml = true;
