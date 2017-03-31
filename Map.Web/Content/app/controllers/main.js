@@ -655,12 +655,11 @@
 
 		var gpsconfig = {
 			enableHighAccuracy: true,
-			timeout: 60 * 1000 ,
+			timeout: 60 * 1000,
 			maximumAge: 10 * 1000
-		}
+		};
 
-		function updateGPSLocationOnce()
-		{
+		function updateGPSLocationOnce() {
 			navigator.geolocation.getCurrentPosition(onPositionUpdate, onPositionError, gpsconfig);
 		}
 
@@ -668,7 +667,7 @@
 
 		$scope.usermarkers = [];
 		$scope.usermarker = { id: "myposition", position: { latitude: null, longitude: null } };
-		$scope.usermarker.position.latitude = center_lat
+		$scope.usermarker.position.latitude = center_lat;
 		$scope.usermarker.position.longitude = center_lng;
 		$scope.usermarker.id = "myposition";
 		$scope.usermarker.markeroptions = {
