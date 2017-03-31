@@ -84,10 +84,12 @@
 			}
 			return activeids;
 		};
+
 		$scope.clickedMenuItem = function (clickedCategory) {
 			$scope.toggleActiveMenuItem(clickedCategory);
 			$scope.setShortUrl();
 		};
+
 		// They clicked a menu item
 		$scope.toggleActiveMenuItem = function (clickedCategory) {
 			var deferred = $q.defer();
@@ -207,6 +209,7 @@
 			$rootScope.searchplaces = [];
 			$scope.searchterm = "";
 		};
+
 		// Handle opening and closing the listings panel
 		var maxpanelwidth = "235px";
 		$scope.openListings = function () {
@@ -220,6 +223,7 @@
 			$scope.listingsopen = true;
 			$timeout($scope.setMapDimensions, 400);
 		};
+
 		// Close marker listings window
 		$scope.closeListings = function () {
 			var width = parseInt(jQuery("#selectedPlaceList").width());
@@ -231,6 +235,7 @@
 			$timeout($scope.setMapDimensions, 400);
 			$timeout($scope.setMapDimensions, 2400);
 		};
+
 		// Toggle listings open/closed
 		$scope.toggleListings = function () {
 			var selectedPlaceListWidth = parseInt(jQuery("#selectedPlaceList").width());
@@ -581,6 +586,7 @@
 				}
 			}, timeout);
 		};
+
 		// This is the search results, the autocomplete list
 		$rootScope.searchplaces = [];
 		$scope.clearAutocomplete = function () {
@@ -644,6 +650,47 @@
 				}
 			});
 			return json;
+		}
+
+
+		var gpsconfig = {
+			enableHighAccuracy: true,
+			timeout: 60 * 1000,
+			maximumAge: 10 * 1000
+		};
+
+		function updateGPSLocationOnce() {
+			navigator.geolocation.getCurrentPosition(onPositionUpdate, onPositionError, gpsconfig);
+		}
+
+		updateGPSLocationOnce();
+
+		$scope.usermarkers = [];
+		$scope.usermarker = { id: "myposition", position: { latitude: null, longitude: null } };
+		$scope.usermarker.position.latitude = center_lat;
+		$scope.usermarker.position.longitude = center_lng;
+		$scope.usermarker.id = "myposition";
+		$scope.usermarker.markeroptions = {
+			optimized: false,
+			icon: {
+				url: "/Content/images/ico-marker-current.png",
+				size: new google.maps.Size(80, 80),
+				scaledSize: new google.maps.Size(40, 40),
+				// The origin for this image is 0,0.
+				origin: new google.maps.Point(0, 0),
+				// The anchor for this image is the base of the flagpole at 0,32.
+				anchor: new google.maps.Point(20, 20)
+			}
+		};
+		$scope.usermarkers.push($scope.usermarker);
+
+		function onPositionUpdate(position) {
+			$scope.usermarker.position.latitude = position.coords.latitude;
+			$scope.usermarker.position.longitude = position.coords.longitude;
+		}
+
+		function onPositionError(error) {
+			console.log(error);
 		}
 
 		// Called after google map is ready
