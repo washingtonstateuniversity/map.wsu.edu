@@ -10,7 +10,7 @@ namespace Map.Data
         public style_optionsmap()
         {
             Id(x => x.id, "style_option_id");
-            HasOne(x => x.type);
+            References(x => x.type);
             References(x => x.user_event, "event");
             References(x => x.zoom, "zoom");
             Map(x => x.value);

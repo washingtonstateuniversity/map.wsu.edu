@@ -21,7 +21,7 @@ namespace Map.Data
             Map(x => x.Nid);
             Map(x => x.commentorName);
             Map(x => x.Email);
-            HasOne(x => x.place);
+            References(x => x.place);
         }
     }
 }

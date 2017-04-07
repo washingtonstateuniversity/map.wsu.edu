@@ -20,9 +20,10 @@ namespace Map.Controllers
 			this.campusService = _campusService;
 		}
 
-		public ActionResult Index(String[] cat, String pid)
+		public ActionResult Index(String[] cat, String pid, int campus = 1)
         {
-			campus thisCampus = campusService.get(1);
+			campus thisCampus = campusService.get(campus);
+			ViewBag.campusid = campus;
 			ViewBag.city = thisCampus.city;
 			ViewBag.latitude = thisCampus.latitude;
 			ViewBag.longitude = thisCampus.longitude;
@@ -52,6 +53,11 @@ namespace Map.Controllers
 			}
 
 			return Index(cat, pid);
+		}
+
+		public ActionResult campus(int campusid)
+		{
+			return Index(null, null, campusid);
 		}
 
 		private String[] getCategoryFromURL(String originalurl)

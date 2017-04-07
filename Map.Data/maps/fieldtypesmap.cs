@@ -16,7 +16,7 @@ namespace Map.Data
             Map(x => x.name);
 			// Map(x => x.set, "fieldset");
 			//References(x => x.set, "fieldset");
-			//HasOne(x => x.set);
+			//References(x => x.set);
 			HasMany(x => x.fields).KeyColumn("type").NotFound.Ignore();
 
 			HasManyToMany(x => x.authors)

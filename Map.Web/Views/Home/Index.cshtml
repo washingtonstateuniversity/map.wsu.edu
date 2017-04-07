@@ -6,7 +6,7 @@
             <div id="header_bar">
                 <div id="toolbar">
                     <ul>
-                        <li><h1>Pullman Campus Map</h1></li>
+                        <li><h1>@ViewBag.city Campus Map</h1></li>
                         <li style="float:left"><a ng-click="resetMap();" id="resetmap">Reset Map</a></li>
                         <li><a ng-click="showEmbed=true" id="embed">Link<span id="embedlink">/Embed</span></a></li>
                         <li><a ng-click="showReportErrorPopup()" class="errorReporting">Report Error</a></li>
@@ -151,6 +151,7 @@
 				startingUrl : '@ViewBag.smallurl',
 				activePlace: '@ViewBag.placeid',
 				campus: '@ViewBag.city',
+				campusid: '@ViewBag.campusid',
 				categories: '@ViewBag.categories',
 				url: '/',
 				campus_latlng_str: '@ViewBag.latitude,@ViewBag.longitude'

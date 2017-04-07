@@ -29,7 +29,7 @@ namespace Map.Data
                 .ChildKeyColumn("author_id")
                 .NotFound.Ignore();
 			Map(x => x.center); //.CustomType(typeof(MsSql2008GeographyType));
-            HasOne(x => x.media);
+			References(x => x.media);
             Map(x => x.staticMap);
             HasMany(x => x.Comments)
                 .Table("view_to_comments")
@@ -60,20 +60,20 @@ namespace Map.Data
                 .ChildKeyColumn("geometric_id")
                 .Inverse()
                 .NotFound.Ignore();
-            HasOne(x => x.forced_shapes_style);
-            HasOne(x => x.forced_marker_style);
-            HasOne(x => x.campus);
+			References(x => x.forced_shapes_style);
+			References(x => x.forced_marker_style);
+            References(x => x.campus);
             Map(x => x.options_obj, "optionObj");
 
             // Publish base
             Map(x => x.creation_date);
-            HasOne(x => x.editing);
+            References(x => x.editing);
             Map(x => x.isPublic);
             Map(X => X.needs_update);
             References(x => x.owner, "onwer");
             Map(x => x.outputError);
             Map(x => x.publish_time);
-            HasOne(x => x.status);
+            References(x => x.status);
             Map(x => x.tmp);
             Map(x => x.updated_date);
         }

@@ -11,7 +11,7 @@ namespace Map.Data
         {
             Id(x => x.id, "style_id");
             Map(x => x.name);
-            HasOne(x => x.type);
+            References(x => x.type);
             Map(x => x.style_obj);
             HasManyToMany(x => x._option)
                 .Table("style_to_style_options")
