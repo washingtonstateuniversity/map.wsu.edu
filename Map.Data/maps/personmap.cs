@@ -18,7 +18,7 @@ namespace Map.Data
             Map(x => x.BreakingNews);
             Map(x => x.Newsletter);
             Map(x => x.Nid);
-            HasOne(x => x.AccessLevelStatus);
+            References(x => x.AccessLevelStatus);
             References(x => x.PersonType, "personTypeId");
         }
     }

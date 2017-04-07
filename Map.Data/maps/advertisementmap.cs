@@ -11,7 +11,6 @@ namespace Map.Data
             Id(x => x.id, "ad_id");
             Map(x => x.Clicked);
             Map(x => x.expiration);
-           
             Map(x => x.HtmlText);
             HasManyToMany(x => x.Images)
                 .Table("advertisement_to_media")
@@ -22,7 +21,7 @@ namespace Map.Data
             Map(x => x.maxClicks).Default("0");
             Map(x => x.maxImpressions).Default("0");
             Map(x => x.Name);
-            HasOne(x => x.place_types);
+			References(x => x.place_types);
             Map(x => x.startdate);
             HasManyToMany(x => x.Tags).Table("advertisement_to_tag")
                 .ParentKeyColumn("ad_id")

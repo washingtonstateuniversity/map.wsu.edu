@@ -11,8 +11,8 @@ namespace Map.Data
         {
             Id(x => x.Id);
             Map(x => x.geometric_order);
-            HasOne(x => x.geometric);
-            HasOne(x => x.Media);            
+			References(x => x.geometric);
+			References(x => x.Media);
         }
     }
 }

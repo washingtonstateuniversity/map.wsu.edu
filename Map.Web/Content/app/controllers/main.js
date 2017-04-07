@@ -119,7 +119,7 @@
 				$scope.clearTheMenu();
 			}
 			else {
-				mapService.getPlaceObjByCategories(activeids).then(
+				mapService.getPlaceObjByCategories(activeids,$scope.campusid).then(
 					function (markers) {
 						$scope.markers = markers;
 						for (var i = 0; i < $scope.markers.length; i++) {
@@ -142,6 +142,7 @@
 			{
 				newurl += "&pid=" + pid;
 			}
+			newurl += "&campusid=" + $scope.campusid;
 			return newurl;
 		};
 
@@ -154,11 +155,11 @@
 			}
 			var newurl = $scope.getURLParams(activeids, placeid);
 			if (placeid === null && activeids === null) {
-				$window.history.pushState({ cat: activeids, pid: placeid }, null, "/");
+				$window.history.pushState({ cat: activeids, pid: placeid, campusid: $scope.campusid }, null, "/");
 			}
 			else {
 				return mapService.getSmallUrl(newurl).then(function (data) {
-					$window.history.pushState({ cat: activeids, pid: placeid }, newurl, "/t/" + data.sm_url);
+					$window.history.pushState({ cat: activeids, pid: placeid, campusid: $scope.campusid }, newurl, "/t/" + data.sm_url);
 				});
 			}
 		};
@@ -168,7 +169,8 @@
 			if (event && event.state) {
 				var newcategories = event.state.cat;
 				var placeid = event.state.pid;
-				setupSavedCategoriesAndPlaceMap(newcategories.toString(), placeid);
+				var campusid = event.state.campusid;
+				setupSavedCategoriesAndPlaceMap(newcategories.toString(), placeid, campusid);
 			}
 		});
 
@@ -508,7 +510,8 @@
 				});
 				$scope.directionService = new google.maps.DirectionsService();
 				$scope.directionsDisplay = new google.maps.DirectionsRenderer();
-				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace);
+				$scope.campusid = map_view.campusid;
+				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace, map_view.campusid);
 			});
 		});
 
@@ -695,7 +698,8 @@
 
 		// Called after google map is ready
 		// Open category and clicked place from small url
-		function setupSavedCategoriesAndPlaceMap(categoryids, placeid) {
+		function setupSavedCategoriesAndPlaceMap(categoryids, placeid, campusid) {
+			$scope.campusid = campusid;
 			// Menu setup -- We dynamically get the JSON feed to make the menu
 			mapService.getCategoryList().then(function (data) {
 				$scope.categories = data;

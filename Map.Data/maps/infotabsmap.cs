@@ -18,7 +18,7 @@ namespace Map.Data
                 .Inverse()
                 .NotFound.Ignore();
             Map(x => x.sort);
-            HasOne(x => x.template);
+			References(x => x.template);
             Map(x => x.title);
         }
     }

@@ -9,6 +9,7 @@ namespace Map.Tests.Controllers
     [TestFixture]
     public class HomeControllerTest
     {
+		// Future tests: handle campuses, handle short codes
         [Test]
         public void HomeIndexPage()
         {

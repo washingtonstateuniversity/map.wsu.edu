@@ -13,9 +13,11 @@ namespace Map.Data.Services
 {
     public class CategoryService
     {
-		public IEnumerable<place> GetCategoryPlaces(int CategoryId)
+		public IEnumerable<place> GetCategoryPlaces(int CategoryId, int CampusId = 1)
 		{
 			IRepository<categories> repo = new Repository<categories>();
+			CampusService campusService = new CampusService();
+			campus thisCampus = campusService.get(CampusId);
 			var category = repo.GetReference<categories>(CategoryId);
 			List<place> placesToReturn = new List<place>();
 			placesToReturn.AddRange(category.Places);
@@ -25,6 +27,7 @@ namespace Map.Data.Services
 				placesToReturn.AddRange(child.Places);
 			}
 
+			placesToReturn = placesToReturn.FindAll(p => p.campus.id == thisCampus.id);
 			return placesToReturn.Distinct<place>().OrderBy(p => p.prime_name);
 		}
 	}
