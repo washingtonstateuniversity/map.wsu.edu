@@ -33,15 +33,15 @@ namespace Map.Controllers
 
         [CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
         [Route("api/v1/category/{id}/places")]
-        public IEnumerable<place> GetCategoryPlaces(int id)
+        public IEnumerable<place> GetCategoryPlaces(int id, int campusid = 1)
         {
-			IEnumerable<place> placesToReturn = categoryService.GetCategoryPlaces(id);
+			IEnumerable<place> placesToReturn = categoryService.GetCategoryPlaces(id, campusid);
             return placesToReturn.Distinct().Take<place>(99);
         }
 
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		[Route("api/v1/category/places")]
-		public IEnumerable<place> GetCategoryPlaces(String ids)
+		public IEnumerable<place> GetCategoryPlaces(String ids, int campusid = 1)
 		{
 			List<place> placesToReturn = new List<place>();
 
@@ -50,7 +50,7 @@ namespace Map.Controllers
 				foreach (String id in ids.Split(','))
 				{
 					var intId = Convert.ToInt32(id);
-					placesToReturn.AddRange(this.categoryService.GetCategoryPlaces(intId));
+					placesToReturn.AddRange(this.categoryService.GetCategoryPlaces(intId, campusid));
 				}
 			}
 

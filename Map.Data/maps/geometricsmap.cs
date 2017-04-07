@@ -14,12 +14,12 @@ namespace Map.Data
             Map(x => x.name);
             Map(x => x.encoded);
             Map(x => x.staticMap);
-            HasOne(x => x.default_type);
-            HasOne(x => x.parent);
+			References(x => x.default_type);
+			References(x => x.parent);
             HasMany(x => x.children)
                 .LazyLoad()
                 .Cascade.AllDeleteOrphan();
-            HasOne(x => x.media);
+			References(x => x.media);
             HasManyToMany(x => x.tags)
                 .Table("geometric_to_tags")
                 .ParentKeyColumn("geometric_id")
@@ -65,13 +65,13 @@ namespace Map.Data
 
             // Publish base
             Map(x => x.creation_date);
-            HasOne(x => x.editing);
+			References(x => x.editing);
             Map(x => x.isPublic);
             Map(X => X.needs_update);
             References(x => x.owner, "onwer");
             Map(x => x.outputError);
             Map(x => x.publish_time);
-            HasOne(x => x.status);
+			References(x => x.status);
             Map(x => x.tmp);
             Map(x => x.updated_date);
         }

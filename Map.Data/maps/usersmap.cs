@@ -11,8 +11,8 @@ namespace Map.Data
         {
             Id(x => x.id, "author_id");
             Map(x => x.nid);
-            HasOne(x => x.groups);
-            HasOne(x => x.settings);
+            References(x => x.groups);
+            References(x => x.settings);
             Map(x => x.name);
             Map(x => x.email);
             Map(x => x.phone);

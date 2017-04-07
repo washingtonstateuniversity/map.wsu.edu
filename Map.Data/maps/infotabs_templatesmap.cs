@@ -23,13 +23,13 @@ namespace Map.Data
 
             // Publish base
             Map(x => x.creation_date);
-            HasOne(x => x.editing);
+			References(x => x.editing);
             Map(x => x.isPublic);
             Map(x => x.needs_update);
             References(x => x.owner, "onwer");
             Map(x => x.outputError);
             Map(x => x.publish_time);
-            HasOne(x => x.status);
+			References(x => x.status);
             Map(x => x.tmp);
             Map(x => x.updated_date);
         }

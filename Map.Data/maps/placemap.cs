@@ -37,11 +37,11 @@ namespace Map.Data
                 .ParentKeyColumn("place_id")
                 .ChildKeyColumn("place_type_id")
                 .NotFound.Ignore();
-            HasOne(x => x.model);
-            HasOne(x => x.media);
+            References(x => x.model);
+            References(x => x.media);
             Map(x => x.staticMap);
             Map(x => x.pointImg);
-            HasOne(x => x.campus);
+            References(x => x.campus);
             Map(x => x.percentfull);
             HasManyToMany(x => x.departments)
                 .Table("place_to_departments")
@@ -121,13 +121,13 @@ namespace Map.Data
 
             // Publish base
             Map(x => x.creation_date);
-            HasOne(x => x.editing);
+            References(x => x.editing);
             Map(x => x.isPublic);
             Map(X => X.needs_update);
             References(x => x.owner, "onwer");
             Map(x => x.outputError);
             Map(x => x.publish_time);
-            HasOne(x => x.status);
+            References(x => x.status);
             Map(x => x.tmp);
             Map(x => x.updated_date);
         }

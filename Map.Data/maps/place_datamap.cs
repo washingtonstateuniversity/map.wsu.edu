@@ -12,7 +12,7 @@ namespace Map.Data
             Id(x => x.Id);
             Map(x => x.Data);
             Map(x => x.Key, "[Key]");
-            HasOne(x => x.Place);           
+			References(x => x.Place);
         }
     }
 }

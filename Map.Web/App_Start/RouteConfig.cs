@@ -20,6 +20,30 @@
 			);
 
 			routes.MapRoute(
+				name: "spokane",
+				url: "spokane",
+				defaults: new { controller = "Home", action = "campus", campusid = 4 }
+			);
+
+			routes.MapRoute(
+				name: "vancouver",
+				url: "vancouver",
+				defaults: new { controller = "Home", action = "campus", campusid = 3 }
+			);
+
+			routes.MapRoute(
+				name: "richland",
+				url: "richland",
+				defaults: new { controller = "Home", action = "campus", campusid = 2 }
+			);
+
+			routes.MapRoute(
+				name: "pullman",
+				url: "pullman",
+				defaults: new { controller = "Home", action = "campus", campusid = 1 }
+			);
+
+			routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

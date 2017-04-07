@@ -15,9 +15,9 @@ WSUApp.factory('myCache', function($cacheFactory) {
                 });
 			return deferred.promise;
         },
-		getPlaceObjByCategories: function(ids) {
+		getPlaceObjByCategories: function(ids, campusid) {
 			var deferred = $q.defer();
-			var url = '/api/v1/category/places?ids=' + ids;
+			var url = '/api/v1/category/places?ids=' + ids + '&campusid=' + campusid;
 			if (ids === null) {
 				deferred.resolve([]);
 			}

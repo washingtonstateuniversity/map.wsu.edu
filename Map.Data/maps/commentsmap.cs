@@ -19,7 +19,7 @@ namespace Map.Data
             Map(x => x.Flagged);
             Map(x => x.FlagNumber);
             Map(x => x.Nid);
-            HasOne(x => x.place);
+			References(x => x.place);
             Map(x => x.published);
             Map(x => x.UpdateTime);
         }
