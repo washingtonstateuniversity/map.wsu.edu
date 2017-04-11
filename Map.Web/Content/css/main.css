@@ -1,325 +1,427 @@
 #campusmap #selectedPlaceList_area ul {
-  padding-bottom: 75px;
+	padding-bottom: 75px;
 }
+
 #campusmap #selectedPlaceList_area ul li a {
-  cursor: pointer;
+	cursor: pointer;
 }
+
 #campusmap #selectedPlaceList_area #directions_area {
-  padding-top: 5px;
+	padding-top: 5px;
 }
+
 #campusmap #listing {
-  overflow: hidden;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
+
 #campusmap #selectedPlaceList {
-  width: 235px;
+	width: 235px;
 }
+
 #campusmap #spine #glue #spine-navigation {
-  height: auto;
+	height: auto;
 }
+
 #campusmap #spine #glue #spine-navigation #main_nav .active li a {
-  padding-bottom: 0;
+	padding-bottom: 0;
 }
+
 #campusmap #spine #glue #spine-navigation #main_nav .active ul {
-  margin-top: 3px;
+	margin-top: 3px;
 }
+
 #campusmap #spine #glue #spine-navigation #main_nav li a {
-  height: auto;
+	height: auto;
 }
+
 #campusmap #spine #glue #spine-navigation .spine-sitenav {
-  padding-bottom: 50px;
+	padding-bottom: 50px;
 }
+
 #campusmap #spine #glue #spine-navigation form#getDirections ul #directionsFrom:before {
-  top: auto;
+	top: auto;
 }
+
 #campusmap #spine #glue #spine-navigation form#getDirections ul #directionsTo:before {
-  top: auto;
+	top: auto;
 }
+
 #campusmap footer {
-  background-color: #fff;
+	background-color: #fff;
 }
+
 #main_nav .parentarea ul li em {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
+
 #spine-navigation {
-  overflow: hidden;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
+
 #glue {
-  height: 100%;
+	height: 100%;
 }
+
 .moveformenu {
-  margin-left: 235px;
+	margin-left: 235px;
 }
+
 form label {
-  display: block;
-  margin-top: 5px;
+	display: block;
+	margin-top: 5px;
 }
+
 @-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+
 }
+
 @keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+
 }
+
 .ui-widget-overlay {
-  background: #000;
-  opacity: 0.5;
+	background: #000;
+	opacity: .5;
 }
+
 .loaderWrapper .loader {
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-duration: 2s;
-  animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-name: rotate;
-  animation-name: rotate;
-  background: transparent url(/Content/images/ico-loader.png);
-  background-size: 100% 100%;
-  height: 20px;
-  position: absolute;
-  right: calc(50% - 10px);
-  top: calc(50% - 10px);
-  width: 20px;
-  z-index: 99999;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-name: rotate;
+	animation-name: rotate;
+	background: transparent url(/Content/images/ico-loader.png);
+	background-size: 100% 100%;
+	height: 20px;
+	position: absolute;
+	right: calc(50% - 10px);
+	top: calc(50% - 10px);
+	width: 20px;
+	z-index: 99999;
 }
+
 .ng-hide-add {
-  -webkit-animation: 0.5s fadeOut ease;
-  animation: 0.5s fadeOut ease;
+	-webkit-animation: .5s fadeOut ease;
+	animation: .5s fadeOut ease;
 }
+
 .ng-hide-remove {
-  -webkit-animation: 0.5s fadeIn ease;
-  animation: 0.5s fadeIn ease;
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none;
+	-webkit-animation: .5s fadeIn ease;
+	animation: .5s fadeIn ease;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform: none;
 }
+
 .ui-dialog {
-  -webkit-transform: translateY(80%) scale(0.8);
-  -ms-transform: translateY(80%) scale(0.8);
-  transform: translateY(80%) scale(0.8);
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+	-webkit-transform: translateY(80%) scale(.8);
+	-ms-transform: translateY(80%) scale(.8);
+	transform: translateY(80%) scale(.8);
+	-webkit-transition: .5s;
+	transition: .5s;
 }
+
 .open .ui-dialog {
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none;
+	-webkit-transform: none;
+	-ms-transform: none;
+	transform: none;
 }
+
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
 [x-ng-cloak],
 .ng-cloak,
 .x-ng-cloak {
-  display: none !important;
+	display: none !important;
 }
+
 a {
-  cursor: pointer;
+	cursor: pointer;
 }
-.adp,
+
+.adp {
+	font-weight: 300;
+	color: #2c2c2c;
+}
+
 .adp table {
-  font-family: Roboto, Arial, sans-serif;
-  font-weight: 300;
-  color: #2c2c2c;
+	font-weight: 300;
+	color: #2c2c2c;
 }
-.adp b,
-.adp-list b {
-  font-weight: 400;
+
+.adp b {
+	font-weight: 400;
 }
-.adp-warnbox {
-  margin: 5px 0 3px;
-}
-.warnbox-content {
-  background: #fff1a8;
-  padding: 5px 6px;
-}
-.warnbox-c1,
-.warnbox-c2 {
-  background: #fff1a8;
-  font-size: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-.warnbox-c1 {
-  margin: 0 2px;
-}
-.warnbox-c2 {
-  margin: 0 1px;
-}
+
 .adp-list {
-  background: #fff;
-  border: 1px solid #cdcdcd;
-  cursor: pointer;
-  padding: 4px;
-  font-family: Roboto, Arial, sans-serif;
-  font-weight: 300;
-  color: #2c2c2c;
+	background: #fff;
+	border: 1px solid #cdcdcd;
+	cursor: pointer;
+	padding: 4px;
+	font-weight: 300;
+	color: #2c2c2c;
 }
-.adp-fullwidth {
-  width: 100%;
+
+.adp-list b {
+	font-weight: 400;
 }
-.adp-listsel {
-  background: #eee;
-  text-decoration: none;
+
+.adp-list img {
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 2px;
+	margin-right: 3px;
 }
-.adp-listheader {
-  padding: 4px;
-}
-.adp-placemark {
-  background: #eee;
-  border: 1px solid silver;
-  color: #000;
-  cursor: pointer;
-  margin: 10px 0;
-  vertical-align: middle;
-}
-img.adp-marker {
-  width: 22px;
-  height: 40px;
-}
-.adp-details,
-.adp-legal {
-  color: #676767;
-}
-.adp-summary {
-  padding: 0 3px 3px;
-}
-.adp-step,
-.adp-substep {
-  border-top: 1px solid #cdcdcd;
-  margin: 0;
-  padding: .3em 3px;
-  vertical-align: top;
-}
-.adp-list img,
-.adp-substep img {
-  width: 15px;
-  height: 15px;
-  position: relative;
-  top: 2px;
-  margin-right: 3px;
-}
-.adp-distance {
-  white-space: nowrap;
-}
-.adp-step,
-.adp-text {
-  width: 100%;
-}
-.adp-directions {
-  cursor: pointer;
-  border-collapse: collapse;
-}
+
 .adp-list .gm-arrow {
-  width: 8px;
-  height: 9px;
-  margin: 5px 0 3px;
+	width: 8px;
+	height: 9px;
+	margin: 5px 0 3px;
 }
-.adp-agencies {
-  font-size: 80%;
-  margin: 5px 0;
+
+.adp-warnbox {
+	margin: 5px 0 3px;
 }
-.adp-summary-duration {
-  float: right;
-  margin-left: 7px;
-  white-space: nowrap;
+
+.warnbox-content {
+	background: #fff1a8;
+	padding: 5px 6px;
 }
+
+.warnbox-c1 {
+	background: #fff1a8;
+	font-size: 1px;
+	height: 1px;
+	overflow: hidden;
+	margin: 0 2px;
+}
+
+.warnbox-c2 {
+	background: #fff1a8;
+	font-size: 1px;
+	height: 1px;
+	overflow: hidden;
+	margin: 0 1px;
+}
+
+.adp-fullwidth {
+	width: 100%;
+}
+
+.adp-listsel {
+	background: #eee;
+	text-decoration: none;
+}
+
+.adp-listheader {
+	padding: 4px;
+}
+
+.adp-placemark {
+	background: #eee;
+	color: #000;
+	cursor: pointer;
+	margin: 10px 0;
+	vertical-align: middle;
+}
+
+.adp-marker {
+	width: 22px;
+	height: 40px;
+}
+
+.adp-details {
+	color: #676767;
+}
+
+.adp-legal {
+	color: #676767;
+}
+
+.adp-summary {
+	padding: 0 3px 3px;
+}
+
+.adp-step {
+	border-top: 1px solid #cdcdcd;
+	margin: 0;
+	padding: .3em 3px;
+	vertical-align: top;
+	width: 100%;
+}
+
+.adp-substep {
+	border-top: 1px solid #cdcdcd;
+	margin: 0;
+	padding: .3em 3px;
+	vertical-align: top;
+}
+
+.adp-substep img {
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 2px;
+	margin-right: 3px;
+}
+
 .adp-substep .gm-line {
-  margin-right: 4px;
+	margin-right: 4px;
 }
+
 .adp-substep .adp-stepicon {
-  overflow: hidden;
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 16px;
+	overflow: hidden;
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver {
-  background-size: 19px 630px;
-  position: absolute;
-  left: 0;
-  width: 16px;
-  height: 16px;
+	background-size: 19px 630px;
+	position: absolute;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/maneuvers.png);
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-ferry {
-  background-position: 0 -614px;
+	background-position: 0 -614px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-ferry-train {
-  background-position: 0 -566px;
+	background-position: 0 -566px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-merge {
-  background-position: 0 -143px;
+	background-position: 0 -143px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-straight {
-  background-position: 0 -534px;
+	background-position: 0 -534px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-fork-left {
-  background-position: 0 -550px;
+	background-position: 0 -550px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-ramp-left {
-  background-position: 0 -598px;
+	background-position: 0 -598px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-roundabout-left {
-  background-position: 0 -197px;
+	background-position: 0 -197px;
 }
-.adp-substep .adp-stepicon .adp-maneuver.adp-turn-left,
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-left {
+	background-position: 0 -413px;
+}
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-keep-left {
-  background-position: 0 -413px;
+	background-position: 0 -413px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-turn-sharp-left {
-  background-position: 0 0;
+	background-position: 0 0;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-turn-slight-left {
-  background-position: 0 -378px;
+	background-position: 0 -378px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-uturn-left {
-  background-position: 0 -305px;
+	background-position: 0 -305px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-fork-right {
-  background-position: 0 -499px;
+	background-position: 0 -499px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-ramp-right {
-  background-position: 0 -429px;
+	background-position: 0 -429px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-roundabout-right {
-  background-position: 0 -232px;
+	background-position: 0 -232px;
 }
-.adp-substep .adp-stepicon .adp-maneuver.adp-turn-right,
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-right {
+	background-position: 0 -483px;
+}
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-keep-right {
-  background-position: 0 -483px;
+	background-position: 0 -483px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-turn-sharp-right {
-  background-position: 0 -582px;
+	background-position: 0 -582px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-turn-slight-right {
-  background-position: 0 -51px;
+	background-position: 0 -51px;
 }
+
 .adp-substep .adp-stepicon .adp-maneuver.adp-uturn-right {
-  background-position: 0 -35px;
+	background-position: 0 -35px;
 }
-.adp-substep .adp-stepicon .adp-maneuver {
-  background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/maneuvers.png);
+
+.adp-distance {
+	white-space: nowrap;
 }
+
+.adp-text {
+	width: 100%;
+}
+
+.adp-directions {
+	cursor: pointer;
+	border-collapse: collapse;
+}
+
+.adp-agencies {
+	font-size: 80%;
+	margin: 5px 0;
+}
+
+.adp-summary-duration {
+	float: right;
+	margin-left: 7px;
+	white-space: nowrap;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -547,12 +547,11 @@
 		};
 
 		$scope.clearDirections = function () {
-			if($scope.directionsDisplay)
-			{
+			if ($scope.directionsDisplay) {
 				$scope.directionsDisplay.setMap(null);
 			}
 			$scope.showDirections = false;
-		}
+		};
 
 		$scope.drawDirectionsPath = function (place) {
 			var decodedPath = google.maps.geometry.encoding.decodePath(place.shapes[0].encoded);
