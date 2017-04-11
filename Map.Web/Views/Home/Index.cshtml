@@ -18,7 +18,60 @@
                     <a id="selectedPlaceList_btn" hidefocus="true" ng-click="toggleListings()" ng-class="{active: listingsopen}" class="closeListings">Info</a>
                     <div id="selectedPlaceList_area">
                         <ul id="option"><li id="locations" ng-class="{active:!showDirections}" ng-click="showDirections=false">Locations</li><li ng-class="{active:showDirections}" ng-click="showDirections=true">Directions</li></ul>
-						<div id="directions-panel" ng-show="directions">{{directions}}</div>
+						<div id="directions-panel" ng-show="showDirections" iscroll="{refreshInterval: 500}">
+							<div id="directions_area" style="direction: ltr;">
+								<div>
+									<div class="adp">
+										<div data-leg-index="0">
+											<table class="adp-placemark">
+												<tbody>
+													<tr>
+														<td><img class="adp-marker" src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&amp;text=A&amp;psize=16&amp;font=fonts/Roboto-Regular.ttf&amp;color=ff333333&amp;ax=44&amp;ay=48&amp;scale=1"></td>
+														<td class="adp-text">{{directions.start_address}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div>
+											<div class="adp-summary">
+												<span>1.4 mi</span><span>.</span> <span>About <span>29 mins</span></span> <span style="display:none"></span>
+											</div>
+											<div>
+												<table class="adp-directions">
+													<tbody>
+														<tr data-leg-index="0" data-step-index="0" ng-repeat="step in directions.steps track by $index">
+															<td class="adp-substep">
+																<div class="adp-stepicon">
+																	<div class="adp-maneuver adp-maneuver adp-{{step.maneuver}}"></div>
+																</div>
+															</td>
+															<td class="adp-substep">{{$index+1}}.</td>
+															<td class="adp-substep" ng-bind-html="step.instructions"></td>
+															<td class="adp-substep">
+																<div class="adp-distance" ng-bind-html="step.distance.text"></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div data-leg-index="1">
+												<table class="adp-placemark">
+													<tbody>
+														<tr>
+															<td><img class="adp-marker" src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&amp;text=B&amp;psize=16&amp;font=fonts/Roboto-Regular.ttf&amp;color=ff333333&amp;ax=44&amp;ay=48&amp;scale=1"></td>
+															<td class="adp-text">{{directions.end_address}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="adp-legal">
+											Map data ©2017 Google
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div id="listing" class="heightminusbar" tabindex="0" iscroll="{refreshInterval: 500}">
                             <ul id="mainnav" ng-show="!showDirections">
                                 <li ng-repeat="place in markers">
@@ -167,6 +220,7 @@
 <ng-include src="'/Content/reportError.html'"></ng-include>
 <ng-include src="'/Content/message.html'"></ng-include>
 <ng-include src="'/Content/loading.html'"></ng-include>
+<ng-include src="'/Content/directionsMode.html'"></ng-include>
 
 
 

@@ -92,6 +92,7 @@
 
 		// They clicked a menu item
 		$scope.toggleActiveMenuItem = function (clickedCategory) {
+			$scope.clearDirections();
 			var deferred = $q.defer();
 			$scope.clearShapes();
 			$scope.closeWindow();
@@ -251,6 +252,7 @@
 
 		// Handle clicking of either the icon on the map or the listing in the listing panel
 		$scope.showWindow = function (selectedPlace) {
+			$scope.clearDirections();
 			console.debug("selectedPlace", selectedPlace);
 			$scope.map.window.model = selectedPlace;
 			$scope.setShortUrl();
@@ -469,7 +471,7 @@
 					}
 					return "";
 				},
-				showDirectionsFrom: function (place) { $scope.showDirectionsFrom(place); },
+				beginDirectionsFrom: function (place) { $scope.beginDirectionsFrom(place); },
 				showReportErrorPopup: $scope.showReportErrorPopup,
 				options: {
 					alignBottom: true,
@@ -515,18 +517,42 @@
 			});
 		});
 
-		$scope.showDirectionsFrom = function (place) {
-			console.info('showdirections', place);
-			var request = { origin: "Pullman, WA", destination: place.latitude + "," + place.longitude, optimizeWaypoints: true, travelMode: google.maps.TravelMode.DRIVING };
+		$scope.directionsStartingPlace = null;
 
+		$scope.beginDirectionsFrom = function (place) {
+			$scope.directionsStartingPlace = place;
+			$scope.choosedirectionsmode = true;
+		};
+
+		$scope.choseDirectionsMode = function () {
+			$scope.showDirectionsFrom($scope.directionsStartingPlace, $scope.directionsMode);
+		};
+
+		$scope.directionsMode = "DRIVING";
+		$scope.chooseDirectionsMode = function () {
+			$scope.choosedirectionsmode = true;
+		};
+
+		$scope.showDirectionsFrom = function (place, mode) {
+			var origin = $scope.usermarker.position.latitude + ", " + $scope.usermarker.position.longitude;
+			var request = { origin: origin, destination: place.latitude + "," + place.longitude, optimizeWaypoints: true, travelMode: mode };
+			$scope.choosedirectionsmode = false;
 			$scope.directionService.route(request, function (response, status) {
-				console.log(response);
+				$scope.directions = response.routes[0].legs[0];
 				$scope.directionsDisplay.setDirections(response);
 				$scope.directionsDisplay.setMap($scope.mapinstance);
-				$scope.directions = response;
-				$scope.$apply();
+				$scope.showDirections = true;
+				$scope.closeWindow();
 			});
 		};
+
+		$scope.clearDirections = function () {
+			if($scope.directionsDisplay)
+			{
+				$scope.directionsDisplay.setMap(null);
+			}
+			$scope.showDirections = false;
+		}
 
 		$scope.drawDirectionsPath = function (place) {
 			var decodedPath = google.maps.geometry.encoding.decodePath(place.shapes[0].encoded);
@@ -560,6 +586,7 @@
 			$scope.closeListings();
 			$scope.markers = [];
 			$scope.closeWindow();
+			$scope.clearDirections();
 			$scope.clearShapes();
 			$scope.clearTheMenu();
 			$scope.setShortUrl();
