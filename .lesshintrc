@@ -37,7 +37,7 @@
   "trailingSemicolon"      : { "enabled": true },
   "trailingWhitespace"     : { "enabled": true },
   "trailingZero"           : { "enabled": true },
-  "urlFormat"              : { "enabled": true, "style": "relative" },
+  "urlFormat"              : { "enabled": false, "style": "relative" },
   "urlQuotes"              : { "enabled": false },
   "zeroUnit"               : { "enabled": true, "style": "no_unit" }
 }

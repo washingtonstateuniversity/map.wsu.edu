@@ -339,6 +339,7 @@
     <Content Include="Content\images\print\state_icon.jpg" />
     <Content Include="Content\js\vendor\output.js" />
     <Content Include="Content\js\vendor\output.min.js" />
+    <Content Include="Content\directionsMode.html" />
     <Content Include="Content\message.html" />
     <Content Include="Content\printable.html" />
     <Content Include="Content\loading.html" />
