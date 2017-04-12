@@ -145,9 +145,12 @@
 			}
 			newurl += "&campusid=" + $scope.campusid;
 			if ($scope.directionsMode && $scope.directionsStartingPlace)
+			{
 				newurl += "&directionsmode=" + $scope.directionsMode;
-			if ($scope.directionsStartingPlace)
+			}
+			if ($scope.directionsStartingPlace) {
 				newurl += "&directionsplaceid=" + $scope.directionsStartingPlace.id;
+			}
 			return newurl;
 		};
 
@@ -565,6 +568,8 @@
 				$scope.directionsDisplay.setMap(null);
 			}
 			$scope.showDirections = false;
+			$scope.directionsStartingPlace = null;
+			$scope.choosedirectionsmode = null;
 		};
 
 		$scope.drawDirectionsPath = function (place) {
@@ -763,8 +768,9 @@
 								$scope.directionsStartingPlace = $scope.markers[i];
 							}
 						}
-						if ($scope.directionsStartingPlace)
+						if ($scope.directionsStartingPlace) {
 							$scope.choseDirectionsMode();
+						}
 					}
 				});
 			});
