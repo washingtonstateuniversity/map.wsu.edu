@@ -130,6 +130,7 @@ namespace Map.Controllers
 
 			HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 			var path = HttpContext.Current.Server.MapPath(uploadPath + id + arg + ".ext");
+
 			if (File.Exists(path))
 			{
 				var stream = new FileStream(HttpContext.Current.Server.MapPath(uploadPath + id + arg + ".ext"), FileMode.Open, FileAccess.Read);
