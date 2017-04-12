@@ -249,7 +249,6 @@ secrets.config
 # bower
 bower_components/
 bower/
-vendor/
 
 # uploads
 *.ext

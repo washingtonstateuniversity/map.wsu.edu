@@ -43,7 +43,7 @@ namespace Map.Controllers
 			else
 			{
 				// build the path for the new image
-				uploadPath = HttpContext.Current.Request.ApplicationPath + @"\uploads\";
+				uploadPath = HttpContext.Current.Server.MapPath("/uploads");
 
 				if (placeid != 0)
 				{
