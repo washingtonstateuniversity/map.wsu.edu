@@ -20,13 +20,16 @@ namespace Map.Controllers
 			this.campusService = _campusService;
 		}
 
-		public ActionResult Index(String[] cat, String pid, int campus = 1)
+		public ActionResult Index(String[] cat, String pid, int campus = 1, String directionsmode = "", String directionsplaceid = "")
         {
 			campus thisCampus = campusService.get(campus);
 			ViewBag.campusid = campus;
 			ViewBag.city = thisCampus.city;
 			ViewBag.latitude = thisCampus.latitude;
 			ViewBag.longitude = thisCampus.longitude;
+			ViewBag.directionsmode = directionsmode;
+			ViewBag.directionsplaceid = directionsplaceid;
+
 			if (Request != null)
 				ViewBag.siteroot = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
 			// Set selected categories
@@ -43,21 +46,25 @@ namespace Map.Controllers
 			ViewBag.key = key;
 			small_url matchingurl = smallUrlService.getByKey(key);
 			String[] cat = new String[] { };
-			String pid = "";
+			String pid = "", directionsmode = "", directionsplaceid = "";
+			int campusid = 1;
 
 			if (matchingurl != null)
 			{
 				ViewBag.smallurl = matchingurl.or_url;
 				cat = getCategoryFromURL(matchingurl.or_url);
 				pid = getPlaceIDFromURL(matchingurl.or_url);
+				directionsmode = getDirectionsModeFromURL(matchingurl.or_url);
+				directionsplaceid = getDirectionsPlaceIDFromURL(matchingurl.or_url);
+				campusid = getCampusFromURL(matchingurl.or_url);
 			}
 
-			return Index(cat, pid);
+			return Index(cat, pid, campusid, directionsmode, directionsplaceid);
 		}
 
 		public ActionResult campus(int campusid)
 		{
-			return Index(null, null, campusid);
+			return Index(null, null, campusid, null, null);
 		}
 
 		private String[] getCategoryFromURL(String originalurl)
@@ -78,6 +85,35 @@ namespace Map.Controllers
 				return "";
 			var parsed = HttpUtility.ParseQueryString(originalurl);
 			return parsed["pid"];
+		}
+
+		private String getDirectionsPlaceIDFromURL(String originalurl)
+		{
+			originalurl = originalurl.Replace("/central?", "");
+			if (!originalurl.Contains("directionsplaceid="))
+				return "";
+			var parsed = HttpUtility.ParseQueryString(originalurl);
+			return parsed["directionsplaceid"];
+		}
+
+		private String getDirectionsModeFromURL(String originalurl)
+		{
+			originalurl = originalurl.Replace("/central?", "");
+			if (!originalurl.Contains("directionsmode="))
+				return "";
+			var parsed = HttpUtility.ParseQueryString(originalurl);
+			return parsed["directionsmode"];
+		}
+
+		private int getCampusFromURL(String originalurl)
+		{
+			originalurl = originalurl.Replace("/central?", "");
+			if (!originalurl.Contains("campusid="))
+				return 1;
+			var parsed = HttpUtility.ParseQueryString(originalurl);
+			int parsedint = 1;
+			Int32.TryParse(parsed["campusid"], out parsedint);
+			return parsedint;
 		}
 	}
 }

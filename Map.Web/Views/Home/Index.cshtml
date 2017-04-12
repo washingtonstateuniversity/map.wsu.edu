@@ -196,19 +196,21 @@
     <a class="aerial_gouped" rel="aerial_gouped" hidefocus="true" alt="" href="/uploads/map/controll/Aerial_7586.jpg" style="outline: medium none;"></a>
 </div>
 <script type="text/javascript">
-			var map_view = {
-				inview: false,
-				siteroot: '@ViewBag.siteroot',
-				debug: true,
-				error_reporting: true,
-				startingUrl : '@ViewBag.smallurl',
-				activePlace: '@ViewBag.placeid',
-				campus: '@ViewBag.city',
-				campusid: '@ViewBag.campusid',
-				categories: '@ViewBag.categories',
-				url: '/',
-				campus_latlng_str: '@ViewBag.latitude,@ViewBag.longitude'
-			};
+	var map_view = {
+		inview: false,
+		siteroot: '@ViewBag.siteroot',
+		debug: true,
+		error_reporting: true,
+		startingUrl : '@ViewBag.smallurl',
+		activePlace: '@ViewBag.placeid',
+		campus: '@ViewBag.city',
+		campusid: '@ViewBag.campusid',
+		categories: '@ViewBag.categories',
+		directionsplaceid: '@ViewBag.directionsplaceid',
+		directionsmode: '@ViewBag.directionsmode',
+		url: '/',
+		campus_latlng_str: '@ViewBag.latitude,@ViewBag.longitude'
+	};
 </script>
 <ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ng-cloak" ng-show="searchplaces.length > 0" tabindex="0" style="top: 178px;left: 28px;width: 191px;z-index:99999999" click-outside="clearAutocomplete()" outside-if-not="searchterm">
     <li class="ui-menu-item" ng-repeat="place in searchplaces | filter:{'related':false}" ng-click="loadOnePlace(place.place_id)"><a>{{place.label}}</a></li>
