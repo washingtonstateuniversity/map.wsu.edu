@@ -764,7 +764,7 @@
 							if ($scope.markers[i].id === parseInt(placeid)) {
 								$scope.showWindow($scope.markers[i]);
 							}
-							if ($scope.markers[i].id === parseInt(placeid)) {
+							if ($scope.markers[i].id === parseInt(directionsplaceid)) {
 								$scope.directionsStartingPlace = $scope.markers[i];
 							}
 						}
