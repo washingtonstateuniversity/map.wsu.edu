@@ -3,7 +3,7 @@ WSU map
 
 [![Build Status](https://travis-ci.org/washingtonstateuniversity/map.wsu.edu.svg?branch=master)](https://travis-ci.org/washingtonstateuniversity/map.wsu.edu)
 
-[![Build Status](http://jenkins-01.web.wsu.edu:8080/buildStatus/icon?job=map.wsu.edu)](http://jenkins-01.web.wsu.edu:8080/job/map.wsu.edu/)
+<a href='http://jenkins-01.web.wsu.edu:8080/job/map.wsu.edu/'><img src='http://jenkins-01.web.wsu.edu:8080/buildStatus/icon?job=map.wsu.edu'></a>
 
 ##How to run locally
 This repo doesn't include the `Map.Web/secrets.config` file which is what is used to set the database connection.  You'll have to create your own by making a copy of `Map.Web/secrets.config.default` and renaming it `Map.Web/secrets.config`.  This will look like:
