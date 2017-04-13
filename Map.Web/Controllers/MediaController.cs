@@ -43,7 +43,7 @@ namespace Map.Controllers
 			else
 			{
 				// build the path for the new image
-				uploadPath = HttpContext.Current.Request.ApplicationPath + @"\uploads\";
+				uploadPath = HttpContext.Current.Server.MapPath("/uploads");
 
 				if (placeid != 0)
 				{
@@ -130,6 +130,7 @@ namespace Map.Controllers
 
 			HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
 			var path = HttpContext.Current.Server.MapPath(uploadPath + id + arg + ".ext");
+
 			if (File.Exists(path))
 			{
 				var stream = new FileStream(HttpContext.Current.Server.MapPath(uploadPath + id + arg + ".ext"), FileMode.Open, FileAccess.Read);

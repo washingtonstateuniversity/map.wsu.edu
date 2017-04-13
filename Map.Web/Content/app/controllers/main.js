@@ -144,23 +144,34 @@
 				newurl += "&pid=" + pid;
 			}
 			newurl += "&campusid=" + $scope.campusid;
+			if ($scope.directionsMode && $scope.directionsStartingPlace)
+			{
+				newurl += "&directionsmode=" + $scope.directionsMode;
+			}
+			if ($scope.directionsStartingPlace) {
+				newurl += "&directionsplaceid=" + $scope.directionsStartingPlace.id;
+			}
 			return newurl;
 		};
 
 		// Get short url from Database like /t/350E1FC4 and set it in the URL
 		$scope.setShortUrl = function () {
 			var activeids = $scope.getActiveMenuLinks();
-			var placeid = null;
+			var placeid = null, directionsplaceid = null;
 			if ($scope.map.window.model) {
 				placeid = $scope.map.window.model.id;
 			}
+			if ($scope.directionsStartingPlace) {
+				directionsplaceid = $scope.directionsStartingPlace.id;
+			}
+			var state = { cat: activeids, pid: placeid, campusid: $scope.campusid, directionsplaceid: directionsplaceid, directionsmode: $scope.directionsMode };
 			var newurl = $scope.getURLParams(activeids, placeid);
 			if (placeid === null && activeids === null) {
-				$window.history.pushState({ cat: activeids, pid: placeid, campusid: $scope.campusid }, null, "/");
+				$window.history.pushState(state, null, "/");
 			}
 			else {
 				return mapService.getSmallUrl(newurl).then(function (data) {
-					$window.history.pushState({ cat: activeids, pid: placeid, campusid: $scope.campusid }, newurl, "/t/" + data.sm_url);
+					$window.history.pushState(state, newurl, "/t/" + data.sm_url);
 				});
 			}
 		};
@@ -171,7 +182,9 @@
 				var newcategories = event.state.cat;
 				var placeid = event.state.pid;
 				var campusid = event.state.campusid;
-				setupSavedCategoriesAndPlaceMap(newcategories.toString(), placeid, campusid);
+				var directionsplaceid = event.state.directionsplaceid;
+				var directionsmode = event.state.directionsmode;
+				setupSavedCategoriesAndPlaceMap(newcategories.toString(), placeid, campusid, directionsplaceid, directionsmode);
 			}
 		});
 
@@ -513,7 +526,10 @@
 				$scope.directionService = new google.maps.DirectionsService();
 				$scope.directionsDisplay = new google.maps.DirectionsRenderer();
 				$scope.campusid = map_view.campusid;
-				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace, map_view.campusid);
+				$scope.directionsStartingPlace = map_view.directionsplaceid;
+				$scope.directionsmode = map_view.directionsmode;
+
+				setupSavedCategoriesAndPlaceMap(map_view.categories, map_view.activePlace, map_view.campusid, map_view.directionsplaceid, map_view.directionsmode);
 			});
 		});
 
@@ -541,6 +557,7 @@
 				$scope.directions = response.routes[0].legs[0];
 				$scope.directionsDisplay.setDirections(response);
 				$scope.directionsDisplay.setMap($scope.mapinstance);
+				$scope.setShortUrl();
 				$scope.showDirections = true;
 				$scope.closeWindow();
 			});
@@ -551,6 +568,8 @@
 				$scope.directionsDisplay.setMap(null);
 			}
 			$scope.showDirections = false;
+			$scope.directionsStartingPlace = null;
+			$scope.choosedirectionsmode = null;
 		};
 
 		$scope.drawDirectionsPath = function (place) {
@@ -724,8 +743,10 @@
 
 		// Called after google map is ready
 		// Open category and clicked place from small url
-		function setupSavedCategoriesAndPlaceMap(categoryids, placeid, campusid) {
+		function setupSavedCategoriesAndPlaceMap(categoryids, placeid, campusid, directionsplaceid, directionsmode) {
 			$scope.campusid = campusid;
+			$scope.directionsmode = directionsmode;
+
 			// Menu setup -- We dynamically get the JSON feed to make the menu
 			mapService.getCategoryList().then(function (data) {
 				$scope.categories = data;
@@ -743,6 +764,12 @@
 							if ($scope.markers[i].id === parseInt(placeid)) {
 								$scope.showWindow($scope.markers[i]);
 							}
+							if ($scope.markers[i].id === parseInt(placeid)) {
+								$scope.directionsStartingPlace = $scope.markers[i];
+							}
+						}
+						if ($scope.directionsStartingPlace) {
+							$scope.choseDirectionsMode();
 						}
 					}
 				});

@@ -163,6 +163,7 @@ module.exports = function(grunt) {
 	
 
     // Default task(s).
-    grunt.registerTask( "default", [ "lesshint", "jshint", "less", "sed", "stylelint", "uglify" ] );
+    grunt.registerTask( "default", [ "lesshint", "jshint", "less", "sed", "stylelint"] );
+	grunt.registerTask( "build", [ "uglify" ] );
 	grunt.registerTask( "work", [ "lesshint", "jshint", "less", "sed", "stylelint",  "watch" ] );
 };
