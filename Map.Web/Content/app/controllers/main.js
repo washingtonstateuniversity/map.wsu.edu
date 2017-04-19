@@ -554,6 +554,7 @@
 			var request = { origin: origin, destination: place.latitude + "," + place.longitude, optimizeWaypoints: true, travelMode: mode };
 			$scope.choosedirectionsmode = false;
 			$scope.directionService.route(request, function (response, status) {
+				console.log(response);
 				$scope.directions = response.routes[0].legs[0];
 				$scope.directionsDisplay.setDirections(response);
 				$scope.directionsDisplay.setMap($scope.mapinstance);
